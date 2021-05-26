@@ -1,16 +1,16 @@
 <template>
   <div class="base-search">
     <input
-      :value="value" 
-      type="text"
+      :value="value"
       placeholder="Procure por heróis"
+      onfocus="placeholder=''" 
+      onblur="placeholder='Procure por heróis'"
     >
   </div>
 </template>
 
 <script>
 export default {
-
 }
 </script>
 
@@ -20,9 +20,16 @@ export default {
 
   & input {
     width: 100%;
-    height: 67px;
+    height: 47px;
     border-radius: 50px;
-    background: #FDECEC;
+    text-indent: 70px;
+    border: none;
+    outline: none;
+    background: $primary-red url(../assets/icons/ic_busca.svg) no-repeat 20px 10px;
+  }
+
+  ::-webkit-input-placeholder {
+    color:red;
   }
 }
 
