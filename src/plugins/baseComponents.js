@@ -1,5 +1,5 @@
 const install = (Vue) => {
-  Vue.component('base-search-input', () => import('../components/BaseSearchInput.vue'));
+  Vue.component('base-search', () => import('../components/BaseSearch.vue'));
 }
 
 export default install;

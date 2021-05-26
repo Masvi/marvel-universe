@@ -8,7 +8,8 @@
       Explore o universo
     </div>
     <div class="header__description">
-      Mergulhe no domínio deslumbrante de todos os personagens os personagens clássicos que você ama - e aqueles que você descobrirá em breve!
+      Mergulhe no domínio deslumbrante de todos os personagens os personagens 
+      clássicos que você ama - e aqueles que você descobrirá em breve!
     </div>
   </div>
 </template>
