@@ -25,7 +25,7 @@ export default {
 .header {
 
   &__title {
-    color: #000;
+    color: $primary-black;
     font-weight: 800;
     font-size: 28px;
     height: 50px;
@@ -33,7 +33,7 @@ export default {
   }
 
   &__description {
-    color: rgb(114, 113, 113);
+    color: $primary-gray;
     font-weight: 500;
     font-size: 15px;
   }
