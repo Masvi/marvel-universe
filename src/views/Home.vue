@@ -5,10 +5,10 @@
       <base-search />
     </div>
     <div class="home__menu">
-      <div class="home__menu home__menu--results">
+      <div class="home__menu results">
         Econtrados 20 heróis
       </div>
-      <div class="home__menu home__menu--options">
+      <div class="home__menu options">
         <div>
           <img
             src="../assets/icons/ic_heroi.svg"
@@ -25,15 +25,30 @@
         </div>
       </div>
     </div>
+
+    <div class="home__list">
+      <base-card-item
+        v-for="(item, i) of array"
+        :key="item"
+      > 
+        {{ i }}
+      </base-card-item>
+    </div>
   </div>
 </template>
 
 <script>
+
 import Header from '../components/Header';
 
 export default {
   components: {
     Header
+  },
+  data() {
+    return {
+      array: [0,1,2,3,4,5,6,7,9,10,11,12]
+    }
   }
 }
 </script>
@@ -45,25 +60,29 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  padding: 0 4rem;
 
   &__search-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 35px;
-    width: 70%;
+    width: 60rem;
   }
 
   &__menu {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: space-between;
-    width: 900px;
-    margin-top: 20px;
+    margin: 1.5rem 0;
+    width: 100%;
   
-    &--results { 
+    & .results { 
       height: 30px;
+      padding-left: 20px;
     }
 
-    &--options {
+    & .options {
+      padding-right: 20px;
       justify-content: flex-end;
       height: 30px;
     }
@@ -77,6 +96,13 @@ export default {
       align-items: center;
       padding: .5rem;
     }
+  }
+
+  &__list {
+    display: flex;
+    justify-content:center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
