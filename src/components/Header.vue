@@ -39,6 +39,7 @@ export default {
     color: $primary-gray;
     font-weight: 500;
     font-size: 15px;
+    text-align: center;
   }
 }
 </style>

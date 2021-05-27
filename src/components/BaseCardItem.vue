@@ -25,8 +25,8 @@ export default {
 
 <style lang="scss" scoped>
 .card-item {
-  width: 290px;
-  height: 330px;
+  width: 200px;
+  height: 310px;
   padding: .75rem;
   margin-bottom: 2rem;
 

@@ -61,6 +61,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   padding: 0 4rem;
+  width: 900px;
 
   &__search-section {
     display: flex;
@@ -78,11 +79,9 @@ export default {
   
     & .results { 
       height: 30px;
-      padding-left: 20px;
     }
 
     & .options {
-      padding-right: 20px;
       justify-content: flex-end;
       height: 30px;
     }
