@@ -6,8 +6,9 @@ const PRIVATE_KEY = '2f26311667c94a3ca6cfef0221517cc671d9eea7';
 
 export default {
   getCharacters() {
-    const ts = new Date().getTime();
-    const hash = MD5(ts + PRIVATE_KEY + PUBLIC_KEY).toString();
-    return api.get(`/characters?ts=${ts}&apikey=${PUBLIC_KEY}&hash=${hash}`)
+    const timestamp = new Date().getTime();
+    const hash = MD5(timestamp + PRIVATE_KEY + PUBLIC_KEY).toString();
+
+    return api.get(`/characters?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`)
   }
 }

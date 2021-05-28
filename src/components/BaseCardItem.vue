@@ -7,7 +7,10 @@
       <div class="card-item__title">
         {{ name }}
       </div>
-      <span class="card-item__favorite">
+      <span 
+        class="card-item__favorite"
+        @click="$emit('onClick')"
+      >
         <img
           src="../assets/favorito_02.svg"
           alt="marvel"

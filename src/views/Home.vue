@@ -4,6 +4,9 @@
     <div class="home__search-section">
       <base-search />
     </div>
+    <div>
+      {{ currentFavorites }}
+    </div>
     <div class="home__menu">
       <div class="home__menu results">
         Econtrados 20 heróis
@@ -32,6 +35,7 @@
         :name="item.name"
         :img-url="item.thumbnail.path"
         :extension="item.thumbnail.extension"
+        @onClick="setAsFavorite(item)"
       /> 
     </div>
   </div>
@@ -41,6 +45,7 @@
 
 import Header from '../components/Header';
 import marvelService from '../services/marvelService';
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -51,6 +56,11 @@ export default {
       characters: [],
     }
   },
+  computed: {
+    ...mapGetters({
+      currentFavorites: "getFavorites",
+    }),
+  },
   created(){
     this.findCharacters();
   },
@@ -59,9 +69,17 @@ export default {
       marvelService.getCharacters().then(({ data }) => {
         this.characters = data.data.results;
       });
+    },
+    setAsFavorite({ id }) {
+      const isFavorite = this.currentFavorites.find((item) => id === item);
+  
+      if (!(isFavorite)) {
+        return this.$store.dispatch("setFavorite", id); 
+      } 
+
+      this.$store.dispatch("unsetFavorite", id); 
     }
   }
-
 }
 </script>
 
@@ -90,12 +108,14 @@ export default {
     width: 100%;
   
     & .results { 
-      height: 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: $primary-gray;
     }
 
     & .options {
-      justify-content: flex-end;
-      height: 30px;
+      font-size: 1rem;
+      color: $secondary-red;
     }
 
     & img {
