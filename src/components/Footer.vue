@@ -22,10 +22,10 @@ export default {
   font-weight: 600;
   background-color: $secondary-red;
   height: 2.5rem;
-      position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 
   &__info {
     color: $primary-red;
