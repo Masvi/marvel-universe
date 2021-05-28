@@ -44,7 +44,6 @@ export default {
   width: 150px;
   height: 310px;
   padding: .75rem;
-  margin-bottom: 2rem;
 
   &__photo {
     height: 224px;

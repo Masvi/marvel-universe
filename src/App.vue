@@ -1,26 +1,44 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div class="app">
+    <div class="main">
+      <router-view />
+    </div>
+    <Footer>
+      Desenvolvido por Jean Masvi
+    </Footer>
   </div>
 </template>
 
 <script>
+import Footer from './components/Footer';
 
 export default {
   name: 'App',
   components: {
+    Footer
   }
 }
 </script>
 
 <style lang="scss">
-#app {
-  display: flex;
-  justify-content:center;
-  
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main {
+  display: flex;
+  max-width: 70rem;
+  margin: 0 auto;
 }
 </style>
