@@ -8,7 +8,7 @@
       <div class="home__menu results">
         Econtrados 20 heróis
       </div>
-      <div class="home__menu options">
+      <div class="home__menu home__options">
         <div>
           <img
             src="../assets/icons/ic_heroi.svg"
@@ -17,7 +17,7 @@
           Ordernar por nome de A/Z
         </div>
         <div
-
+          class="home__favorites"
           @click="showOnlyFavorites()" 
         >
           <img
@@ -137,11 +137,6 @@ export default {
       color: $primary-gray;
     }
 
-    &.options {
-      font-size: 1rem;
-      color: $secondary-red;
-    }
-
     & img {
       padding: .5rem;
     }
@@ -150,6 +145,20 @@ export default {
       display: flex;
       align-items: center;
       padding: .5rem;
+    }
+  }
+
+  &__options {
+    font-size: 1rem;
+    color: $secondary-red;
+  }
+
+  &__favorites {
+    cursor: pointer;
+    
+    &:hover > img{
+      transform:scale(1.1);
+      transition:all 0.4s;
     }
   }
 
