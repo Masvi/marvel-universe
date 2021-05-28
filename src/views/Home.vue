@@ -25,14 +25,14 @@
         </div>
       </div>
     </div>
-
     <div class="home__list">
       <base-card-item
-        v-for="(item, i) of array"
-        :key="item"
-      > 
-        {{ i }}
-      </base-card-item>
+        v-for="item of characters"
+        :key="item.id"
+        :name="item.name"
+        :img-url="item.thumbnail.path"
+        :extension="item.thumbnail.extension"
+      /> 
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@
 <script>
 
 import Header from '../components/Header';
+import marvelService from '../services/marvelService';
 
 export default {
   components: {
@@ -47,9 +48,20 @@ export default {
   },
   data() {
     return {
-      array: [0,1,2,3,4,5,6,7,9,10,11,12]
+      characters: [],
+    }
+  },
+  created(){
+    this.findCharacters();
+  },
+  methods: {
+    findCharacters() {
+      marvelService.getCharacters().then(({ data }) => {
+        this.characters = data.data.results;
+      });
     }
   }
+
 }
 </script>
 

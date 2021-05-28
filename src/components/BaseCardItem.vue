@@ -1,11 +1,11 @@
 <template>
   <div class="card-item">
     <div class="card-item__photo">
-      CardItem
+      <img :src="`${imgUrl}/portrait_xlarge.${extension}`">
     </div>
     <div class="card-item__container">
       <div class="card-item__title">
-        Photo do cara
+        {{ name }}
       </div>
       <span class="card-item__favorite">
         <img
@@ -19,25 +19,39 @@
 
 <script>
 export default {
-
+  props: {
+    name: {
+      type: String,
+      default: ''
+    },
+    imgUrl: {
+      type: String,
+      default: ''
+    },
+    extension: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .card-item {
-  width: 200px;
+  width: 150px;
   height: 310px;
   padding: .75rem;
   margin-bottom: 2rem;
 
   &__photo {
-    height: 290px;
-    background: rgb(155, 245, 38);
+    height: 224px;
     border-bottom: 2.5px solid red;
   }
 
   &__title {
-    color: black;
+    font-weight: 800;
+    font-size: .75rem;
+    color: $primary-black;
   }
 
   &__favorite {
@@ -48,7 +62,7 @@ export default {
   &__container {
     display: flex;
     justify-content: space-between;
-    padding-top: 15px;
+    padding-top: 16px;
   }
 }
 </style>
