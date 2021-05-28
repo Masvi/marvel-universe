@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    favorites: [],
+    isLoading: false,
+    favorites: []
   },
   getters: {
     getFavorites({ favorites }) {
@@ -21,7 +22,10 @@ export default new Vuex.Store({
     },
     REMOVE_ONE_FAVORITE(state) {
       state.favorites.shift();
-    }
+    },
+    SET_LOADING(state) {
+      state.isLoading = !state.isLoading;
+    },
   },
   actions: {
     setFavorite({ commit }, id) {
@@ -32,6 +36,9 @@ export default new Vuex.Store({
     },
     unsetFavorite({ commit }, id) {
       commit('UNSET_FAVORITE', id); 
+    },
+    setLoading({ commit }) {
+      commit('SET_LOADING'); 
     }
   },
 });

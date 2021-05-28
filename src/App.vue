@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <base-loading v-show="$store.state.isLoading" />
     <div class="main">
       <router-view />
     </div>

@@ -49,7 +49,7 @@
       class="home__back"
       @click="showMainList()"
     >
-      <a>Voltar</a>
+      <a>voltar</a>
     </div>
   </div>
 </template>
@@ -81,10 +81,14 @@ export default {
   },
   methods: {
     findCharacters() {
-      marvelService.getCharacters().then(({ data }) => {
-        this.characters = data.data.results;
-        this.currentList = this.characters;
-      });
+      this.handleLoading();
+      marvelService
+        .getCharacters()
+        .then(({ data }) => {
+          this.characters = data.data.results;
+          this.currentList = this.characters;
+        })
+        .finally(() => this.handleLoading());
     },
     setAsFavorite(character) {
       const favorite = this.currentFavorites.find((item) => character.id === item.id);
@@ -102,6 +106,9 @@ export default {
     showMainList() {
       this.onlyFavorites = false;
       this.currentList = this.characters;
+    },
+    handleLoading() {
+      this.$store.dispatch("setLoading");
     }
   }
 }
@@ -177,10 +184,12 @@ export default {
   }
 
   &__back {
-    padding: 2rem;
-    font-size: 1.3rem;
-    color: $secondary-red;
     cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    color: $secondary-red;
+    text-transform: uppercase;
+    padding: 2rem;
   }
 }
 
