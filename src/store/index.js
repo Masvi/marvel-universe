@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   getters: {
     getFavorites({ favorites }) {
-      return favorites
+      return favorites;
     },
   },
   mutations: {
