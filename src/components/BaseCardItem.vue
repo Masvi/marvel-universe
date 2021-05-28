@@ -12,7 +12,13 @@
         @click="$emit('onClick')"
       >
         <img
+          v-if="!isFavorite"
           src="../assets/favorito_02.svg"
+          alt="marvel"
+        >
+        <img
+          v-else
+          src="../assets/favorito_01.svg"
           alt="marvel"
         >
       </span>
@@ -21,8 +27,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   props: {
+    id: {
+      type: Number,
+      default: null
+    },
     name: {
       type: String,
       default: ''
@@ -35,7 +47,15 @@ export default {
       type: String,
       default: ''
     }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      currentFavorites: "getFavorites",
+    }),
+    isFavorite() {
+      return !!this.currentFavorites.find((item) => item.id === this.id)
+    }
+  },
 }
 </script>
 

@@ -28,9 +28,16 @@
         </div>
       </div>
     </div>
+    <div 
+      v-if="onlyFavorites && currentList.length > 0" 
+      class="home__title"
+    >
+      Sua lista de favoritos
+    </div>
     <div class="home__list">
       <base-card-item
         v-for="item of currentList"
+        :id="item.id"
         :key="item.id"
         :name="item.name"
         :img-url="item.thumbnail.path"
@@ -38,19 +45,19 @@
         @onClick="setAsFavorite(item)"
       /> 
     </div>
-    <div 
+    <span 
       v-if="currentList.length === 0"
       class="home__list--no-results"
     >
       Você não possuí favoritos
-    </div>
-    <div
+    </span>
+    <span
       v-if="onlyFavorites" 
       class="home__back"
       @click="showMainList()"
     >
-      <a>voltar</a>
-    </div>
+      voltar
+    </span>
   </div>
 </template>
 
@@ -163,11 +170,18 @@ export default {
   &__favorites {
     cursor: pointer;
     
-    &:hover > img{
+    &:hover > img {
       transform:scale(1.1);
       transition:all 0.4s;
     }
   }
+
+  &__title {
+    display: flex;
+    font-weight: bold;
+    padding: 1rem;
+    color: $primary-gray;
+   }
 
   &__list {
     display: flex;
