@@ -6,6 +6,7 @@
       placeholder="Procure por heróis"
       onfocus="placeholder=''" 
       onblur="placeholder='Procure por heróis'"
+      type="text"
     >
   </div>
 </template>
@@ -39,7 +40,7 @@ export default {
   }
 
   ::-webkit-input-placeholder {
-    color:red;
+    color: $secondary-red;
   }
 }
 

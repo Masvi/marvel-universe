@@ -12,7 +12,7 @@
         <div>
           <img
             src="../assets/icons/ic_heroi.svg"
-            alt="marvel"
+            alt="character"
           >
           Ordernar por nome de A/Z
         </div>
@@ -22,7 +22,7 @@
         >
           <img
             src="../assets/favorito_01.svg"
-            alt="marvel"
+            alt="favorite"
           >
           Somente Favoritos
         </div>

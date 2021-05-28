@@ -1,27 +1,32 @@
 <template>
   <div class="card-item">
     <div class="card-item__photo">
-      <img :src="`${imgUrl}/portrait_xlarge.${extension}`">
+      <img 
+        :src="`${imgUrl}/portrait_xlarge.${extension}`"
+        :alt="name"
+      >
     </div>
     <div class="card-item__container">
       <div class="card-item__title">
         {{ name }}
       </div>
-      <span 
+      <div 
         class="card-item__favorite"
         @click="$emit('onClick')"
       >
-        <img
-          v-if="!isFavorite"
-          src="../assets/favorito_02.svg"
-          alt="marvel"
-        >
-        <img
-          v-else
-          src="../assets/favorito_01.svg"
-          alt="marvel"
-        >
-      </span>
+        <span v-if="!isFavorite">
+          <img
+            src="../assets/favorito_02.svg"
+            alt="favorite"
+          >
+        </span>
+        <span v-else>
+          <img
+            src="../assets/favorito_01.svg"
+            alt="favorite"
+          >
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -67,7 +72,11 @@ export default {
 
   &__photo {
     height: 224px;
-    border-bottom: 2.5px solid red;
+    border-bottom: 2.5px solid $secondary-red;
+
+    & img {
+      border-radius: 2px;
+    }
   }
 
   &__title {
@@ -79,6 +88,11 @@ export default {
   &__favorite {
     height: 16px;
     cursor: pointer;
+
+    & span:hover > img{
+      transform: scale(1.1);
+      transition: all 0.4s;
+    }
   }
 
   &__container {
