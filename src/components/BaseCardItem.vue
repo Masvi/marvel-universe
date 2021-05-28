@@ -1,0 +1,90 @@
+<template>
+  <div class="card-item">
+    <div class="card-item__photo">
+      <img :src="`${imgUrl}/portrait_xlarge.${extension}`">
+    </div>
+    <div class="card-item__container">
+      <div class="card-item__title">
+        {{ name }}
+      </div>
+      <span 
+        class="card-item__favorite"
+        @click="$emit('onClick')"
+      >
+        <img
+          v-if="!isFavorite"
+          src="../assets/favorito_02.svg"
+          alt="marvel"
+        >
+        <img
+          v-else
+          src="../assets/favorito_01.svg"
+          alt="marvel"
+        >
+      </span>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  props: {
+    id: {
+      type: Number,
+      default: null
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    imgUrl: {
+      type: String,
+      default: ''
+    },
+    extension: {
+      type: String,
+      default: ''
+    }
+  },
+  computed: {
+    ...mapGetters({
+      currentFavorites: "getFavorites",
+    }),
+    isFavorite() {
+      return !!this.currentFavorites.find((item) => item.id === this.id)
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.card-item {
+  width: 150px;
+  height: 310px;
+  padding: .75rem;
+
+  &__photo {
+    height: 224px;
+    border-bottom: 2.5px solid red;
+  }
+
+  &__title {
+    font-weight: 800;
+    font-size: .75rem;
+    color: $primary-black;
+  }
+
+  &__favorite {
+    height: 16px;
+    cursor: pointer;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
+  }
+}
+</style>

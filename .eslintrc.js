@@ -1,4 +1,8 @@
 module.exports = {
+  env: {
+    node: true,
+    commonjs: true
+  },
   globals: {
     window: true,
     module: true
