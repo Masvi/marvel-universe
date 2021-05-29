@@ -4,10 +4,14 @@
       <img 
         :src="`${imgUrl}/portrait_xlarge.${extension}`"
         :alt="name"
+        @click="$emit('click')"
       >
     </div>
     <div class="card-item__container">
-      <div class="card-item__title">
+      <div 
+        class="card-item__title"
+        @click="$emit('click')"
+      >
         {{ name }}
       </div>
       <div 
@@ -76,6 +80,7 @@ export default {
 
     & img {
       border-radius: 2px;
+      cursor: pointer;
     }
   }
 
@@ -83,6 +88,7 @@ export default {
     font-weight: 800;
     font-size: .75rem;
     color: $primary-black;
+    cursor: pointer;
   }
 
   &__favorite {

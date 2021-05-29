@@ -40,6 +40,6 @@ export default {
 .main {
   display: flex;
   max-width: 70rem;
-  margin: 0 auto;
+  //margin: 0 auto;
 }
 </style>

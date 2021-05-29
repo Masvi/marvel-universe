@@ -14,7 +14,7 @@
             src="../assets/icons/ic_heroi.svg"
             alt="character"
           >
-          Ordernar por nome de A/Z
+          Ordernar por nome - A/Z
         </div>
         <div
           class="home__favorites"
@@ -43,6 +43,7 @@
         :img-url="item.thumbnail.path"
         :extension="item.thumbnail.extension"
         @onClick="setAsFavorite(item)"
+        @click="showDetails(item)"
       /> 
     </div>
     <span 
@@ -116,6 +117,17 @@ export default {
     },
     handleLoading() {
       this.$store.dispatch("setLoading");
+    },
+    showDetails(item) {
+      const { id } = item;
+
+      this.$router.push({ 
+        name: "details", 
+        params: { 
+          id,
+          item
+         } 
+      });
     }
   }
 }
@@ -203,7 +215,7 @@ export default {
     font-weight: bold;
     color: $secondary-red;
     text-transform: uppercase;
-    padding: 2rem;
+    padding-bottom: 5rem;
   }
 }
 

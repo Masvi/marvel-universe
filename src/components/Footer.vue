@@ -26,6 +26,7 @@ export default {
   bottom: 0;
   width: 100%;
   margin-top: 1rem;
+  position: fixed;
 
   &__info {
     color: $primary-red;
