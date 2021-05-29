@@ -47,6 +47,8 @@
 
 <script>
 import BaseSearch from '../components/BaseSearch.vue';
+import marvelService from '../services/marvelService';
+
 export default {
   name: "CharacterDetail",
   components: { BaseSearch },
@@ -57,11 +59,20 @@ export default {
   },
   created() {
     const { id, item } = this.$route.params;
-
-    if (!item ) {
-      // TODO: busca na api... 
-    }
-    console.log(id);
+    (!item ) ? this.findCharacterById(id) : this.currentCharacter = item;
+  },
+  methods: {
+    findCharacterById(id) {
+      this.handleLoading();
+      marvelService.getCharacterById(id)
+        .then(({ data }) => {
+          this.currentCharacter = data.data.results[0];
+        })
+        .finally(() => this.handleLoading());
+    },
+    handleLoading() {
+      this.$store.dispatch("setLoading");
+    },
   }
 }
 </script>
