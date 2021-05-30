@@ -18,6 +18,7 @@
         </div>
         <div class="character__section">
           <base-favorite 
+            :is-large="true"
             :character="currentCharacter"
           />
         </div>

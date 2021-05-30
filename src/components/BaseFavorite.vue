@@ -3,15 +3,18 @@
     class="base-favorite"
     @click="setAsFavorite"
   >
-    <span v-if="!isFavorite">
+    <span 
+      class="base-favorite__icon"
+      :class="{'base-favorite__icon--is-large': isLarge }"
+    >
       <img
-        src="../assets/favorito_02.svg"
+        v-if="isFavorite"
+        src="../assets/favorito_01.svg"
         alt="favorite"
       >
-    </span>
-    <span v-else>
       <img
-        src="../assets/favorito_01.svg"
+        v-else
+        src="../assets/favorito_02.svg"
         alt="favorite"
       >
     </span>
@@ -28,6 +31,10 @@ export default {
       type: Object,
       required: true,
       default: null
+    },
+    isLarge: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -55,12 +62,26 @@ export default {
 <style lang="scss" scoped>
 .base-favorite {
   display: flex;
-  height: 16px;
   cursor: pointer;
 
-  & span:hover > img{
-    transform: scale(1.1);
-    transition: all 0.4s;
+  &__icon {
+
+    & img {
+      height: 16px;  
+      width: 16px;
+    }
+
+    &--is-large {
+      & img {
+        height: 24px;  
+        width: 24px;
+      }
+    }
+
+    &:hover > img {
+      transform: scale(1.1);
+      transition: all .4s;
+    }
   }
 }
-</style>
+</style>    
