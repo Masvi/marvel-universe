@@ -21,10 +21,16 @@
           @click="showOnlyFavorites()" 
         >
           <img
+            v-show="onlyFavorites"
             src="../assets/favorito_01.svg"
             alt="favorite"
           >
-          Somente Favoritos
+          <img
+            v-show="!onlyFavorites"
+            src="../assets/favorito_02.svg"
+            alt="favorite"
+          >
+          Somente favoritos
         </div>
       </div>
     </div>
@@ -95,8 +101,12 @@ export default {
         .finally(() => this.handleLoading());
     },
     showOnlyFavorites() {
-      this.onlyFavorites = true;
-      this.currentList = this.currentFavorites;
+      if (!this.onlyFavorites) {
+        this.onlyFavorites = true;
+        return this.currentList = this.currentFavorites;
+      }
+
+      this.showMainList();
     },
     showMainList() {
       this.onlyFavorites = false;
