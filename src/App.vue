@@ -12,11 +12,32 @@
 
 <script>
 import Footer from './components/Footer';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Footer
+  },
+  computed: {
+    ...mapGetters({
+      getFavoritesStatus: "getFavoritesStatus",
+    }),
+  },
+  watch: {
+    getFavoritesStatus() {
+      this.showNotification();
+    }
+  },
+  methods: {
+    showNotification() {
+      this.$toast.open({
+        message: 'Você atingiu o número máximo de favoritos!',
+        type: 'default',
+        position: 'top-right',
+        pauseOnHover: true,
+      });
+    },
   }
 }
 </script>

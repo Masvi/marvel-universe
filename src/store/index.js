@@ -6,12 +6,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoading: false,
-    favorites: []
+    favorites: [],
+    isFullFavorites : false
   },
   getters: {
     getFavorites({ favorites }) {
       return favorites;
     },
+    getFavoritesStatus({ isFullFavorites }) {
+      return isFullFavorites;
+    }
   },
   mutations: {
     SET_FAVORITES(state, value) {
@@ -20,22 +24,22 @@ export default new Vuex.Store({
     UNSET_FAVORITE(state, value) {
       state.favorites.splice(state.favorites.indexOf(value), 1);
     },
-    REMOVE_ONE_FAVORITE(state) {
-      state.favorites.shift();
-    },
     SET_LOADING(state) {
       state.isLoading = !state.isLoading;
     },
+    SET_FAVORITES_AS_FULL(state) {
+      state.isFullFavorites = !state.isFullFavorites;
+    },
   },
   actions: {
-    setFavorite({ commit }, id) {
-      if (this.state.favorites.length === 5) {
-        commit('REMOVE_ONE_FAVORITE'); 
+    setFavorite({ commit }, character) {
+      if (this.state.favorites.length < 5) {
+        return commit('SET_FAVORITES', character); 
       }
-      commit('SET_FAVORITES', id); 
+      commit('SET_FAVORITES_AS_FULL');
     },
-    unsetFavorite({ commit }, id) {
-      commit('UNSET_FAVORITE', id); 
+    unsetFavorite({ commit }, character) {
+      commit('UNSET_FAVORITE', character); 
     },
     setLoading({ commit }) {
       commit('SET_LOADING'); 

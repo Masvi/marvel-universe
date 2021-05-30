@@ -47,12 +47,9 @@ export default {
   },
   methods: {
     setAsFavorite() {
-      const favorite = this.currentFavorites.find((item) => this.character.id === item.id);
-  
-      if (!(favorite)) {
+      if (!(this.isFavorite)) {
         return this.$store.dispatch("setFavorite", this.character); 
       } 
-
       this.$store.dispatch("unsetFavorite", this.character); 
     },
   }
