@@ -172,6 +172,7 @@ export default {
 
     &.search {
       max-width: 800px;
+      padding-top: 30px;
     }
   }
   
