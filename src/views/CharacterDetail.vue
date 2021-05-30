@@ -16,13 +16,10 @@
         <div class="character__section character__title">
           {{ currentCharacter.name }}
         </div>
-        <div class="character__section character__favorite">
-          <span>
-            <img
-              src="../assets/favorito_01.svg"
-              alt="favorite"
-            >
-          </span>
+        <div class="character__section">
+          <base-favorite 
+            :character="currentCharacter"
+          />
         </div>
       </div>
       <div class="character__container character__container--column">
@@ -186,18 +183,6 @@ export default {
     font-size: 2.5rem;
     font-weight: bold;
     text-transform: uppercase;
-  }
-
-  &__favorite {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    font-weight: 500;
-
-    & img {
-      width: 28px;
-      height:28px;
-    }
   }
 
   &__description { 

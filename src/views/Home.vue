@@ -37,12 +37,8 @@
     <div class="home__list">
       <base-card-item
         v-for="item of currentList"
-        :id="item.id"
         :key="item.id"
-        :name="item.name"
-        :img-url="item.thumbnail.path"
-        :extension="item.thumbnail.extension"
-        @onClick="setAsFavorite(item)"
+        :character="item"
         @click="showDetails(item)"
       /> 
     </div>
@@ -97,15 +93,6 @@ export default {
           this.currentList = this.characters;
         })
         .finally(() => this.handleLoading());
-    },
-    setAsFavorite(character) {
-      const favorite = this.currentFavorites.find((item) => character.id === item.id);
-  
-      if (!(favorite)) {
-        return this.$store.dispatch("setFavorite", character); 
-      } 
-
-      this.$store.dispatch("unsetFavorite", character); 
     },
     showOnlyFavorites() {
       this.onlyFavorites = true;
