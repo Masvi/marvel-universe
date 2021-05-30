@@ -20,9 +20,14 @@ export default new Vuex.Store({
   mutations: {
     SET_FAVORITES(state, value) {
       state.favorites.push(value);
+      localStorage.setItem('favorites', JSON.stringify(state.favorites));
+    },
+    SET_FAVORITES_FROM_LOCAL_STORAGE(state, value) {
+      state.favorites = value;
     },
     UNSET_FAVORITE(state, value) {
       state.favorites.splice(state.favorites.indexOf(value), 1);
+      localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
     SET_LOADING(state) {
       state.isLoading = !state.isLoading;
@@ -37,6 +42,9 @@ export default new Vuex.Store({
         return commit('SET_FAVORITES', character); 
       }
       commit('SET_FAVORITES_AS_FULL');
+    },
+    setFavoritesFromLocalStorage({ commit }, favorites) {
+      commit('SET_FAVORITES_FROM_LOCAL_STORAGE', favorites); 
     },
     unsetFavorite({ commit }, character) {
       commit('UNSET_FAVORITE', character); 

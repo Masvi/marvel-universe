@@ -133,11 +133,11 @@ export default {
       await marvelService.getCharacterById(id)
         .then(({data}) => this.currentCharacter = data.data.results[0]);
       
-      await this.handleWithComics(this.currentCharacter);
+      await this.findComics(this.currentCharacter);
 
       this.handleLoading();
     },
-    handleWithComics({ comics }) {
+    findComics({ comics }) {
       comics.items.forEach((item) => {
         marvelService.getComicById(
           this.resolveUrl(item)

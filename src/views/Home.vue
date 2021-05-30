@@ -86,7 +86,12 @@ export default {
       currentFavorites: "getFavorites",
     }),
   },
-  created(){
+  created() {
+    if (this.currentFavorites.length === 0) {
+      const storage = JSON.parse(localStorage.getItem('favorites'));
+      this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
+    }
+
     this.findCharacters();
   },
   methods: {
