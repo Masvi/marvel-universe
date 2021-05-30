@@ -14,6 +14,9 @@ export default {
   getCharacterById(id) {
     return api.get(`/characters/${id}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
   },
+  getCharacterByName(name) {
+    return api.get(`/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
+  },
   getComicById(id) {
     return api.get(`/comics/${id}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
   }
