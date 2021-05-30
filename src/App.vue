@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <base-loading v-show="$store.state.isLoading" />
-    <div class="main">
+    <div id="#main">
       <router-view />
     </div>
     <Footer>
@@ -33,13 +33,9 @@ export default {
 
 .app {
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.main {
-  display: flex;
-  max-width: 70rem;
-  //margin: 0 auto;
-}
 </style>

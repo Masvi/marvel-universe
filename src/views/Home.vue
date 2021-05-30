@@ -206,6 +206,7 @@ export default {
       align-items: center;
       flex-direction: column;
       font-size: 1rem;
+      color: $primary-black;
     }
   }
 
@@ -215,7 +216,7 @@ export default {
     font-weight: bold;
     color: $secondary-red;
     text-transform: uppercase;
-    padding-bottom: 5rem;
+    padding: 5rem;
   }
 }
 
