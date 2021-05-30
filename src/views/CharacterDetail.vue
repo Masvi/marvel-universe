@@ -97,17 +97,10 @@
           <img 
             :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
           >
-          <span 
-            v-if="item.title.length < 10"
+          <span
             class="character__comics title"
           >
-            {{ item.title }}
-          </span>
-          <span 
-            v-else
-            class="character__comics title"
-          >
-            {{ item.title.substring(0,12)+"..." }}
+            {{ item.title.length>14 ? item.title.substring(0,14)+"..." : item.title }}
           </span>
         </div>
       </div>
@@ -128,7 +121,7 @@ export default {
     return {
       currentCharacter: {},
       comics: [],
-      show: false
+      show: false,
     }
   },
   created() {
