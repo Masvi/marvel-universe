@@ -38,12 +38,11 @@ export default new Vuex.Store({
   },
   actions: {
     setFavorite({ commit, state }, character) {
-      if (state.favorites && state.favorites.length < 5) {
-        return commit('SET_FAVORITES', character); 
-      }
       if (state.favorites && state.favorites.length === 5) {
-        commit('SET_FAVORITES_AS_FULL');
+        return commit('SET_FAVORITES_AS_FULL');
       }
+      
+      commit('SET_FAVORITES', character); 
     },
     setFavoritesFromLocalStorage({ commit }, favorites) {
       commit('SET_FAVORITES_FROM_LOCAL_STORAGE', favorites); 
