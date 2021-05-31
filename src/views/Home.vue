@@ -188,7 +188,8 @@ export default {
     justify-content: space-between;
     margin: 1.5rem 0;
     width: 100%;
-  
+    
+
     &.results { 
       font-size: 1.2rem;
       font-weight: bold;
@@ -202,13 +203,15 @@ export default {
     & div {
       display: flex;
       align-items: center;
-      padding: .5rem;
+  
     }
   }
 
   &__options {
-    font-size: 1rem;
+    font-size: .85rem;
     color: $secondary-red;
+ 
+  
   }
 
   &__favorites {
