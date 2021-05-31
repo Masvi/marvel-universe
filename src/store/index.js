@@ -41,7 +41,9 @@ export default new Vuex.Store({
       if (this.state.favorites && this.state.favorites.length < 5) {
         return commit('SET_FAVORITES', character); 
       }
-      commit('SET_FAVORITES_AS_FULL');
+      if (this.state.favorites.length === 5) {
+        commit('SET_FAVORITES_AS_FULL');
+      }
     },
     setFavoritesFromLocalStorage({ commit }, favorites) {
       commit('SET_FAVORITES_FROM_LOCAL_STORAGE', favorites); 
