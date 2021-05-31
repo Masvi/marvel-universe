@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <base-loading v-show="$store.state.isLoading" />
-    <div class="main">
+    <div id="#main">
       <router-view />
     </div>
     <Footer>
@@ -12,11 +12,32 @@
 
 <script>
 import Footer from './components/Footer';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Footer
+  },
+  computed: {
+    ...mapGetters({
+      getFavoritesStatus: "getFavoritesStatus",
+    }),
+  },
+  watch: {
+    getFavoritesStatus() {
+      this.showNotification();
+    }
+  },
+  methods: {
+    showNotification() {
+      this.$toast.open({
+        message: 'Você atingiu o número máximo de favoritos!',
+        type: 'default',
+        position: 'top-right',
+        pauseOnHover: true,
+      });
+    },
   }
 }
 </script>
@@ -33,13 +54,9 @@ export default {
 
 .app {
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.main {
-  display: flex;
-  max-width: 70rem;
-  margin: 0 auto;
-}
 </style>

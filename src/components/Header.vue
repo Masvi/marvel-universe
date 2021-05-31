@@ -5,19 +5,20 @@
       alt="marvel"
     >
     <div class="header__title">
-      Explore o universo
+      <h1>Explore o universo</h1>
     </div>
     <div class="header__description">
-      Mergulhe no domínio deslumbrante de todos os personagens os personagens 
-      clássicos que você ama - e aqueles que você descobrirá em breve!
+      <p>
+        Mergulhe no domínio deslumbrante de todos os personagens 
+        clássicos que você ama - e aqueles que você descobrirá em breve!
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-
-
+  name: 'Header'
 }
 </script>
 
@@ -28,11 +29,13 @@ export default {
   flex-direction: column;
 
   &__title {
-    color: $primary-black;
-    font-weight: 800;
-    font-size: 28px;
-    height: 50px;
-    text-transform: uppercase;
+    & h1 {
+      color: $primary-black;
+      font-weight: 800;
+      font-size: 28px;
+      height: 50px;
+      text-transform: uppercase;
+    }
   }
 
   &__description {

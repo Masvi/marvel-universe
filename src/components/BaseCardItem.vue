@@ -1,60 +1,37 @@
 <template>
   <div class="card-item">
     <div class="card-item__photo">
-      <img :src="`${imgUrl}/portrait_xlarge.${extension}`">
+      <img 
+        :src="`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`"
+        :alt="character.name"
+        @click="$emit('click')"
+      >
     </div>
     <div class="card-item__container">
-      <div class="card-item__title">
-        {{ name }}
-      </div>
-      <span 
-        class="card-item__favorite"
-        @click="$emit('onClick')"
+      <div 
+        class="card-item__title"
+        @click="$emit('click')"
       >
-        <img
-          v-if="!isFavorite"
-          src="../assets/favorito_02.svg"
-          alt="marvel"
-        >
-        <img
-          v-else
-          src="../assets/favorito_01.svg"
-          alt="marvel"
-        >
-      </span>
+        {{ character.name }}
+      </div>
+      <div class="card-item__favorite">
+        <base-favorite 
+          :character="character"
+        />
+      </div>
     </div>
   </div>
 </template>
-
+    
 <script>
-import { mapGetters } from "vuex";
 
 export default {
   props: {
-    id: {
-      type: Number,
+    character: {
+      type: Object,
+      required: true,
       default: null
     },
-    name: {
-      type: String,
-      default: ''
-    },
-    imgUrl: {
-      type: String,
-      default: ''
-    },
-    extension: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    ...mapGetters({
-      currentFavorites: "getFavorites",
-    }),
-    isFavorite() {
-      return !!this.currentFavorites.find((item) => item.id === this.id)
-    }
   },
 }
 </script>
@@ -67,17 +44,18 @@ export default {
 
   &__photo {
     height: 224px;
-    border-bottom: 2.5px solid red;
+    border-bottom: 2.5px solid $secondary-red;
+
+    & img {
+      border-radius: 2px;
+      cursor: pointer;
+    }
   }
 
   &__title {
     font-weight: 800;
     font-size: .75rem;
     color: $primary-black;
-  }
-
-  &__favorite {
-    height: 16px;
     cursor: pointer;
   }
 

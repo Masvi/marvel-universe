@@ -6,25 +6,31 @@
     </div>
     <div class="home__menu">
       <div class="home__menu results">
-        Econtrados 20 heróis
+        Econtrados {{ metadata.total }} heróis
       </div>
       <div class="home__menu home__options">
         <div>
           <img
             src="../assets/icons/ic_heroi.svg"
-            alt="marvel"
+            alt="character"
           >
-          Ordernar por nome de A/Z
+          Ordernar por nome - A/Z
         </div>
         <div
           class="home__favorites"
           @click="showOnlyFavorites()" 
         >
           <img
+            v-show="onlyFavorites"
             src="../assets/favorito_01.svg"
-            alt="marvel"
+            alt="favorite"
           >
-          Somente Favoritos
+          <img
+            v-show="!onlyFavorites"
+            src="../assets/favorito_02.svg"
+            alt="favorite"
+          >
+          Somente favoritos
         </div>
       </div>
     </div>
@@ -37,13 +43,19 @@
     <div class="home__list">
       <base-card-item
         v-for="item of currentList"
-        :id="item.id"
         :key="item.id"
-        :name="item.name"
-        :img-url="item.thumbnail.path"
-        :extension="item.thumbnail.extension"
-        @onClick="setAsFavorite(item)"
+        :character="item"
+        @click="showDetails(item)"
       /> 
+    </div>
+    <div 
+      v-if="!onlyFavorites"
+      class="home__pagination"
+    >
+      <base-pagination 
+        :metadata="metadata"
+        @handlePagination="updateMetadata"
+      />
     </div>
     <span 
       v-if="currentList.length === 0"
@@ -75,7 +87,12 @@ export default {
     return {
       characters: [],
       currentList: [],
-      onlyFavorites: false
+      onlyFavorites: false,
+      metadata:{
+        count: 0,
+        offset: 0,
+        total: 0
+      }
     }
   },
   computed: {
@@ -83,32 +100,41 @@ export default {
       currentFavorites: "getFavorites",
     }),
   },
-  created(){
+  created() {
+    if (this.currentFavorites.length === 0) {
+      const storage = JSON.parse(localStorage.getItem('favorites'));
+      this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
+    }
+
     this.findCharacters();
   },
   methods: {
     findCharacters() {
       this.handleLoading();
       marvelService
-        .getCharacters()
-        .then(({ data }) => {
+        .getCharacters(this.metadata)
+        .then(({ data } ) => {
+
           this.characters = data.data.results;
+          const { count, offset, total } = data.data;
+
+          this.metadata = {
+            count,
+            offset,
+            total
+          }
+
           this.currentList = this.characters;
         })
         .finally(() => this.handleLoading());
     },
-    setAsFavorite(character) {
-      const favorite = this.currentFavorites.find((item) => character.id === item.id);
-  
-      if (!(favorite)) {
-        return this.$store.dispatch("setFavorite", character); 
-      } 
-
-      this.$store.dispatch("unsetFavorite", character); 
-    },
     showOnlyFavorites() {
-      this.onlyFavorites = true;
-      this.currentList = this.currentFavorites;
+      if (!this.onlyFavorites) {
+        this.onlyFavorites = true;
+        return this.currentList = this.currentFavorites;
+      }
+
+      this.showMainList();
     },
     showMainList() {
       this.onlyFavorites = false;
@@ -116,6 +142,21 @@ export default {
     },
     handleLoading() {
       this.$store.dispatch("setLoading");
+    },
+    updateMetadata(value) {
+      this.metadata.offset = value;
+      this.findCharacters();
+    },
+    showDetails(item) {
+      const { id } = item;
+
+      this.$router.push({ 
+        name: "details", 
+        params: { 
+          id,
+          item
+         } 
+      });
     }
   }
 }
@@ -194,7 +235,13 @@ export default {
       align-items: center;
       flex-direction: column;
       font-size: 1rem;
+      color: $primary-black;
     }
+  }
+
+  &__pagination {
+    display: flex;
+    margin-bottom: 80px;
   }
 
   &__back {
@@ -203,7 +250,7 @@ export default {
     font-weight: bold;
     color: $secondary-red;
     text-transform: uppercase;
-    padding: 2rem;
+    padding: 5rem;
   }
 }
 
