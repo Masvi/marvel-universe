@@ -16,7 +16,10 @@
           >
           Ordernar por nome - A/Z
           <div>
-            <base-toggle />
+            <base-toggle 
+              :default-checked="sortByName"
+              @input="teste"
+            />
           </div>
         </div>
         <div
@@ -91,6 +94,7 @@ export default {
       characters: [],
       currentList: [],
       onlyFavorites: false,
+      sortByName: false,
       metadata:{
         count: 0,
         offset: 0,
@@ -112,6 +116,9 @@ export default {
     this.findCharacters();
   },
   methods: {
+    teste (value) {
+      console.log(value)
+    },
     findCharacters() {
       this.handleLoading();
       marvelService

@@ -1,6 +1,7 @@
 <template>
   <div class="base-toggle">
     <input
+      id="checkbox"
       v-model="checked"
       type="checkbox"
       @change="change"
