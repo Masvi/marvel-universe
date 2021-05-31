@@ -20,8 +20,9 @@ export default new Vuex.Store({
   mutations: {
     SET_FAVORITES(state, value) {
       console.log(`mutation`)
+      console.log(state)
       console.log(value)
-      state.favorites = [...state.favorites, ...[value]];
+      state.favorites = [...state.favorites, value];
 
       localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
