@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import CharacterDetails from '../views/CharacterDetail.vue';
 
 Vue.use(VueRouter);
 
@@ -12,10 +11,15 @@ const routes = [
     component: Home
   },
   {
-    path: "/:id",
+    path: "detail/:id",
     name: "details",
     props: true,
-    component: CharacterDetails
+    component: () => import('../views/CharacterDetail.vue')
+  },
+  {
+    path: "*",
+    name: "404",
+    component: () => import('../views/NotFound.vue')
   }
 ];
 
