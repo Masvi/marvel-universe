@@ -18,7 +18,7 @@
           <div>
             <base-toggle 
               :default-checked="sortByName"
-              @input="teste"
+              @input="sort"
             />
           </div>
         </div>
@@ -116,9 +116,6 @@ export default {
     this.findCharacters();
   },
   methods: {
-    teste (value) {
-      console.log(value)
-    },
     findCharacters() {
       this.handleLoading();
       marvelService
@@ -145,6 +142,9 @@ export default {
       }
 
       this.showMainList();
+    },
+    sort() {
+      this.currentList.reverse();
     },
     showMainList() {
       this.onlyFavorites = false;
