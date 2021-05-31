@@ -6,7 +6,7 @@
     </div>
     <div class="home__menu">
       <div class="home__menu results">
-        Econtrados 20 heróis
+        Econtrados {{ metadata.total }} heróis
       </div>
       <div class="home__menu home__options">
         <div>
@@ -48,6 +48,15 @@
         @click="showDetails(item)"
       /> 
     </div>
+    <div 
+      v-if="!onlyFavorites"
+      class="home__pagination"
+    >
+      <base-pagination 
+        :metadata="metadata"
+        @handlePagination="updateMetadata"
+      />
+    </div>
     <span 
       v-if="currentList.length === 0"
       class="home__list--no-results"
@@ -78,7 +87,12 @@ export default {
     return {
       characters: [],
       currentList: [],
-      onlyFavorites: false
+      onlyFavorites: false,
+      metadata:{
+        count: 0,
+        offset: 0,
+        total: 0
+      }
     }
   },
   computed: {
@@ -98,9 +112,18 @@ export default {
     findCharacters() {
       this.handleLoading();
       marvelService
-        .getCharacters()
-        .then(({ data }) => {
+        .getCharacters(this.metadata)
+        .then(({ data } ) => {
+
           this.characters = data.data.results;
+          const { count, offset, total } = data.data;
+
+          this.metadata = {
+            count,
+            offset,
+            total
+          }
+
           this.currentList = this.characters;
         })
         .finally(() => this.handleLoading());
@@ -119,6 +142,10 @@ export default {
     },
     handleLoading() {
       this.$store.dispatch("setLoading");
+    },
+    updateMetadata(value) {
+      this.metadata.offset = value;
+      this.findCharacters();
     },
     showDetails(item) {
       const { id } = item;
@@ -210,6 +237,11 @@ export default {
       font-size: 1rem;
       color: $primary-black;
     }
+  }
+
+  &__pagination {
+    display: flex;
+    margin-bottom: 80px;
   }
 
   &__back {

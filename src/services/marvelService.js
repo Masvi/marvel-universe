@@ -8,8 +8,8 @@ const timestamp = new Date().getTime();
 const hash = MD5(timestamp + PRIVATE_KEY + PUBLIC_KEY).toString();
 
 export default {
-  getCharacters() {
-    return api.get(`/characters?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
+  getCharacters({offset}) {
+    return api.get(`/characters?&offset=${offset}&ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
   },
   getCharacterById(id) {
     return api.get(`/characters/${id}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
