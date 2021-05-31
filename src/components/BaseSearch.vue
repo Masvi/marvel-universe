@@ -11,6 +11,7 @@
         @focus="() => showHint = !showHint"
         @blur="() => showHint = !showHint"
         @keyup.enter="searchByName"
+        @keyup="onChange"
       >
     </div>
     <span
@@ -23,7 +24,7 @@
       v-show="error"
       class="base-search__warning base-search__warning--error"
     >
-      Você precisa digitar um nome válido
+      Nenhum resultado encontrado
     </span>
   </div>
 </template>
@@ -38,6 +39,10 @@ export default {
       type: String,
       default: "",
     },
+    searchApi: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -48,13 +53,20 @@ export default {
   },
   methods: {
     searchByName() {
-      if (this.characterName) {
-        marvelService.getCharacterByName(this.characterName).then(({ data }) => {
-          console.log(data)
-        });
+      if (this.searchApi && this.characterName !== '') {
+        this.$store.dispatch("setLoading");
+        
+        marvelService.getCharacterByName(this.characterName)
+          .then(({ data }) => {          
+            (data.data.results[0]) 
+              ? this.$emit('response', data.data.results[0]) 
+              :this.error = true;
+          })
+          .finally(() => this.$store.dispatch("setLoading"));
       }
-
-      this.error = true;
+    },
+    onChange() {
+      this.$emit('typing', this.characterName)
     }
   }
 }

@@ -2,7 +2,9 @@
   <div class="home">
     <Header />
     <div class="home__search-section">
-      <base-search />
+      <base-search 
+        @typing="filterOnList"
+      />
     </div>
     <div class="home__menu">
       <div class="home__menu results">
@@ -15,6 +17,12 @@
             alt="character"
           >
           Ordernar por nome - A/Z
+          <div>
+            <base-toggle 
+              :default-checked="sortByName"
+              @input="sort"
+            />
+          </div>
         </div>
         <div
           class="home__favorites"
@@ -49,7 +57,7 @@
       /> 
     </div>
     <div 
-      v-if="!onlyFavorites"
+      v-if="!onlyFavorites && currentList.lenght >= 20"
       class="home__pagination"
     >
       <base-pagination 
@@ -88,6 +96,7 @@ export default {
       characters: [],
       currentList: [],
       onlyFavorites: false,
+      sortByName: true,
       metadata:{
         count: 0,
         offset: 0,
@@ -135,6 +144,21 @@ export default {
       }
 
       this.showMainList();
+    },
+    sort() {
+      this.currentList.reverse();
+    },
+    filterOnList(value) {
+      const filtered = this.currentList.filter(item => { 
+        return value.toLowerCase().split(' ')
+          .every(v => item.name.toLowerCase().includes(v));
+      });
+
+      this.currentList = filtered;
+        
+      if (value === '') {
+        this.currentList = this.characters;
+      }
     },
     showMainList() {
       this.onlyFavorites = false;
@@ -185,7 +209,8 @@ export default {
     justify-content: space-between;
     margin: 1.5rem 0;
     width: 100%;
-  
+    
+
     &.results { 
       font-size: 1.2rem;
       font-weight: bold;
@@ -199,13 +224,15 @@ export default {
     & div {
       display: flex;
       align-items: center;
-      padding: .5rem;
+  
     }
   }
 
   &__options {
-    font-size: 1rem;
+    font-size: .85rem;
     color: $secondary-red;
+ 
+  
   }
 
   &__favorites {

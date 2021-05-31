@@ -4,6 +4,7 @@ const install = (Vue) => {
   Vue.component('base-loading', () => import('../components/BaseLoading.vue'));
   Vue.component('base-favorite', () => import('../components/BaseFavorite.vue'));
   Vue.component('base-pagination', () => import('../components/BasePagination.vue'));
+  Vue.component('base-toggle', () => import('../components/BaseToggle.vue'));
 }
 
 export default install;
