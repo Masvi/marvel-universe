@@ -19,9 +19,8 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_FAVORITES(state, value) {
-      
-      const favorites = [...state.favorites, value];
-      Vue.set(state, 'favorites', favorites);
+
+      Vue.set(state, 'favorites', ...state.favorites, [value]);
 
       localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
