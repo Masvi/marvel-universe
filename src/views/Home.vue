@@ -57,7 +57,7 @@
       /> 
     </div>
     <div 
-      v-if="!onlyFavorites && currentList.lenght >= 20"
+      v-if="!onlyFavorites"
       class="home__pagination"
     >
       <base-pagination 
