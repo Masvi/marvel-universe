@@ -115,6 +115,7 @@ export default {
   created() {
     if (this.currentFavorites && this.currentFavorites.length === 0) {
       const storage = JSON.parse(localStorage.getItem('favorites'));
+      console.log(storage)
       this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
     }
 
