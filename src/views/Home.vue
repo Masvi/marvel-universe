@@ -15,6 +15,9 @@
             alt="character"
           >
           Ordernar por nome - A/Z
+          <div>
+            <base-toggle />
+          </div>
         </div>
         <div
           class="home__favorites"
