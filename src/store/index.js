@@ -19,6 +19,8 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_FAVORITES(state, value) {
+      console.log(`mutation`)
+      console.log(value)
       state.favorites = [...state.favoritos, value];
       localStorage.setItem('favorites', JSON.stringify(state.favorites));
     },
@@ -38,6 +40,8 @@ export default new Vuex.Store({
   },
   actions: {
     setFavorite({ commit, state }, character) {
+      console.log('set...');
+      console.log(character);
       if (state.favorites && state.favorites.length === 5) {
         return commit('SET_FAVORITES_AS_FULL');
       }
