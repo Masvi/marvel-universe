@@ -8,7 +8,10 @@
         >
       </div>
       <div class="character__header search">
-        <base-search />
+        <base-search 
+          :search-api="true"
+          @response="handleResponse"
+        />
       </div>
     </div>
     <div class="character__section">
@@ -146,6 +149,10 @@ export default {
           this.comics.push(data.data.results[0]);
         });
       })
+    },
+    handleResponse(value) {
+      console.log(value)
+      this.currentCharacter = value;
     },
     handleLoading() {
       this.$store.dispatch("setLoading");
