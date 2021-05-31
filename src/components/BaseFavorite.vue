@@ -42,7 +42,10 @@ export default {
       currentFavorites: "getFavorites",
     }),
     isFavorite() {
-      return !!this.currentFavorites.find((item) => item.id === this.character.id)
+      if (this.currentFavorites && this.currentFavorites.length) {
+        return !!this.currentFavorites.find((item) => item.id === this.character.id)
+      }
+      return false;
     },
   },
   methods: {
