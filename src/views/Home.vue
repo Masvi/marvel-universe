@@ -66,7 +66,7 @@
       />
     </div>
     <span 
-      v-if="currentList.length === 0"
+      v-if="currentList && currentList.length === 0"
       class="home__list--no-results"
     >
       Você não possuí favoritos
