@@ -85,24 +85,26 @@
       </div>
     </div>
     <div class="character__container--column">
-      <div class="character__comics">
-        <h1>Últimos lançamentos</h1>
-      </div>
-      <div class="character__container character__container--wrap">
-        <div
-          v-for="(item, i) of comics"
-          v-show="i < 10"
-          :key="i"
-          class="character__comics item"
-        >
-          <img 
-            :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
+      <div class="character__comics-list">
+        <div class="character__comics">
+          <h1>Últimos lançamentos</h1>
+        </div>
+        <div class="character__container character__container--wrap">
+          <div
+            v-for="(item, i) of comics"
+            v-show="i < 10"
+            :key="i"
+            class="character__comics item"
           >
-          <span
-            class="character__comics title"
-          >
-            {{ item.title.length>14 ? item.title.substring(0,14)+"..." : item.title }}
-          </span>
+            <img 
+              :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
+            >
+            <span
+              class="character__comics title"
+            >
+              {{ item.title.length>14 ? item.title.substring(0,14)+"..." : item.title }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -112,6 +114,7 @@
 <script>
 import BaseSearch from '../components/BaseSearch.vue';
 import marvelService from '../services/marvelService';
+import { mapGetters } from "vuex";
 
 export default {
   name: "CharacterDetail",
@@ -125,7 +128,22 @@ export default {
       show: false,
     }
   },
+  computed: {
+    ...mapGetters({
+      getLoading: "getLoading",
+    }),
+  },
   created() {
+    if (this.getLoading) {
+      this.handleLoading();
+    }
+
+    const storage = JSON.parse(localStorage.getItem('favorites'));
+    
+    if (storage) {
+      this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
+    }
+
     const { id } = this.$route.params;
     this.findCharacterById(id);
   },
@@ -135,13 +153,13 @@ export default {
       
       await marvelService.getCharacterById(id)
         .then(({data}) => this.currentCharacter = data.data.results[0]);
-      
+    
       await this.findComics(this.currentCharacter);
-
+      
       this.handleLoading();
     },
     findComics({ comics }) {
-      comics.items.forEach((item) => {
+      return comics.items.forEach((item) => {
         marvelService.getComicById(
           this.resolveUrl(item)
         )
@@ -151,7 +169,6 @@ export default {
       })
     },
     handleResponse(value) {
-      console.log(value)
       this.currentCharacter = value;
     },
     handleLoading() {
@@ -168,17 +185,14 @@ export default {
 .character {
   display: flex;
   flex-direction: column;
-  margin: 2rem 4rem;
+  margin: 2rem 2rem;
 
   &__header {
     display: flex;
     
-    &.logo {
-      padding: .75rem;
-    }
 
     &.search {
-      max-width: 800px;
+      max-width: 500px;
       padding-top: 30px;
     }
   }
@@ -186,12 +200,14 @@ export default {
   &__section {
     margin-top: 30px;
     max-width: 400px;
+    margin-left: 20px;
   }
 
   &__title {
     font-size: 2.5rem;
     font-weight: bold;
     text-transform: uppercase;
+    margin-left: 0;
   }
 
   &__description { 
@@ -283,6 +299,10 @@ export default {
     }
   }
   
+
+  &__comics-list {
+    margin-left: 20px;
+  }
   &__container { 
     display: flex;
     align-items: center;
@@ -305,8 +325,34 @@ export default {
 
     &--wrap {
       flex-wrap: wrap;
-      width: 800px;
+      max-width: 700px;
       margin-bottom: 80px;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) { 
+  .character__header {
+    display: flex;
+
+    flex-wrap: wrap;
+  }
+  
+  .character__section {
+    max-width: 300px;
+    margin-top: 1rem;
+  }
+  .character__title{ 
+    font-size: 2rem;
+  }
+
+  .character__section {
+  
+    &.search{
+    //margin-top: 30px;
+    width: 300px;
+    background: yellow;
+
     }
   }
 }

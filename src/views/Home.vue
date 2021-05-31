@@ -60,7 +60,7 @@
       </div> 
     </div>
     <div 
-      v-if="!onlyFavorites"
+      v-if="!onlyFavorites && currentList.length !== 0"
       class="home__pagination"
     >
       <base-pagination 
@@ -69,18 +69,20 @@
       />
     </div>
     <span 
-      v-if="currentList && currentList.length === 0"
+      v-if="onlyFavorites && currentList.length === 0"
       class="home__list--no-results"
     >
-      Você não possuí favoritos
+      {{ (filter) ? 'Não encontrado' : 'Você não possuí favoritos' }}
     </span>
-    <span
-      v-if="onlyFavorites" 
-      class="home__back"
-      @click="showMainList()"
-    >
-      voltar
-    </span>
+    <div class="home__back">
+      <span
+        v-if="onlyFavorites" 
+        class="home__back"
+        @click="showMainList()"
+      >
+        voltar
+      </span>
+    </div>
   </div>
 </template>
 
@@ -100,6 +102,7 @@ export default {
       currentList: [],
       onlyFavorites: false,
       sortByName: true,
+      filter: false,
       metadata:{
         count: 0,
         offset: 0,
@@ -110,6 +113,7 @@ export default {
   computed: {
     ...mapGetters({
       currentFavorites: "getFavorites",
+      getLoading: "getLoading",
     }),
   },
   created() {
@@ -118,12 +122,15 @@ export default {
     if (storage) {
       this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
     }
+    
+    if (!this.getLoading) {
+      this.handleLoading();
+    }
 
     this.findCharacters();
   },
   methods: {
     findCharacters() {
-      this.handleLoading();
       marvelService
         .getCharacters(this.metadata)
         .then(({ data } ) => {
@@ -153,6 +160,7 @@ export default {
       this.currentList.reverse();
     },
     filterOnList(value) {
+      this.filter = true;
       const filtered = this.currentList.filter(item => { 
         return value.toLowerCase().split(' ')
           .every(v => item.name.toLowerCase().includes(v));
@@ -162,6 +170,7 @@ export default {
         
       if (value === '') {
         this.currentList = this.characters;
+        this.filter = false;
       }
     },
     showMainList() {
@@ -173,6 +182,7 @@ export default {
     },
     updateMetadata(value) {
       this.metadata.offset = value;
+      this.handleLoading();
       this.findCharacters();
     },
     showDetails(item) {
@@ -198,23 +208,20 @@ export default {
   justify-content: center;
   flex-direction: column;
   padding: 0 4rem;
-  width: 900px;
-
+ 
   &__search-section {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 35px;
-    width: 60rem;
+    max-width: 800px;
   }
 
   &__menu {
     display: flex;
     justify-content: space-between;
-    margin: 1.5rem 0;
-    width: 100%;
+    margin: 1.5rem 1.5rem;
     
-
     &.results { 
       font-size: 1.2rem;
       font-weight: bold;
@@ -228,15 +235,12 @@ export default {
     & div {
       display: flex;
       align-items: center;
-  
     }
   }
 
   &__options {
     font-size: .85rem;
     color: $secondary-red;
- 
-  
   }
 
   &__favorites {
@@ -260,12 +264,14 @@ export default {
     justify-content:center;
     flex-direction: row;
     flex-wrap: wrap;
+    max-width: 800px;
 
     &--no-results {
       display: flex;
       align-items: center;
       flex-direction: column;
-      font-size: 1rem;
+      font-size: .75rem;
+      padding: 3rem;
       color: $primary-black;
     }
   }
@@ -276,12 +282,17 @@ export default {
   }
 
   &__back {
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bold;
-    color: $secondary-red;
-    text-transform: uppercase;
-    padding: 5rem;
+    display: flex;  
+    margin-bottom: 3rem;
+
+    & span {
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: bold;
+      color: $secondary-red;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
   }
 }
 

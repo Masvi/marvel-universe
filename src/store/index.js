@@ -15,7 +15,10 @@ export default new Vuex.Store({
     },
     getFavoritesStatus({ isFullFavorites }) {
       return isFullFavorites;
-    }
+    },
+    getLoading({ isLoading }) {
+      return isLoading;
+    },
   },
   mutations: {
     SET_FAVORITES(state, value) {
