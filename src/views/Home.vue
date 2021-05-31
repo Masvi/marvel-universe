@@ -43,18 +43,21 @@
       </div>
     </div>
     <div 
-      v-if="onlyFavorites && currentList.length > 0" 
+      v-if="onlyFavorites" 
       class="home__title"
     >
       Sua lista de favoritos
     </div>
     <div class="home__list">
-      <base-card-item
+      <div 
         v-for="item of currentList"
         :key="item.id"
-        :character="item"
-        @click="showDetails(item)"
-      /> 
+      >
+        <base-card-item
+          :character="item"
+          @click="showDetails(item)"
+        />
+      </div> 
     </div>
     <div 
       v-if="!onlyFavorites"
