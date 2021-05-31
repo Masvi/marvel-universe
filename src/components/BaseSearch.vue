@@ -11,6 +11,7 @@
         @focus="() => showHint = !showHint"
         @blur="() => showHint = !showHint"
         @keyup.enter="searchByName"
+        @keyup="onChange"
       >
     </div>
     <span
@@ -30,7 +31,7 @@
 
 <script>
 
-import marvelService from '../services/marvelService';
+//import marvelService from '../services/marvelService';
 
 export default {
   props: {
@@ -48,13 +49,16 @@ export default {
   },
   methods: {
     searchByName() {
-      if (this.characterName) {
-        marvelService.getCharacterByName(this.characterName).then(({ data }) => {
-          console.log(data)
-        });
-      }
+      // if (this.characterName) {
+      //   marvelService.getCharacterByName(this.characterName).then(({ data }) => {
+      //     console.log(data)
+      //   });
+      // }
 
-      this.error = true;
+      // this.error = true;
+    },
+    onChange() {
+      this.$emit('typing', this.characterName)
     }
   }
 }

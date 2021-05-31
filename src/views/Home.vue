@@ -2,7 +2,9 @@
   <div class="home">
     <Header />
     <div class="home__search-section">
-      <base-search />
+      <base-search 
+        @typing="filterOnList"
+      />
     </div>
     <div class="home__menu">
       <div class="home__menu results">
@@ -55,7 +57,7 @@
       /> 
     </div>
     <div 
-      v-if="!onlyFavorites"
+      v-if="!onlyFavorites && currentList.lenght >= 20"
       class="home__pagination"
     >
       <base-pagination 
@@ -94,7 +96,7 @@ export default {
       characters: [],
       currentList: [],
       onlyFavorites: false,
-      sortByName: false,
+      sortByName: true,
       metadata:{
         count: 0,
         offset: 0,
@@ -145,6 +147,18 @@ export default {
     },
     sort() {
       this.currentList.reverse();
+    },
+    filterOnList(value) {
+      const filtered = this.currentList.filter(item => { 
+        return value.toLowerCase().split(' ')
+          .every(v => item.name.toLowerCase().includes(v));
+      });
+
+      this.currentList = filtered;
+        
+      if (value === '') {
+        this.currentList = this.characters;
+      }
     },
     showMainList() {
       this.onlyFavorites = false;
