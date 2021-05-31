@@ -39,7 +39,7 @@
           v-else
           class="character__description character__description--no-description"
         >
-          O personagen não possui descrição ainda!
+          O personagem não possui descrição ainda!
         </span>
       </div>
       <div class="character__container">
