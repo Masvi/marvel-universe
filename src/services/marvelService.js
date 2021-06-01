@@ -1,23 +1,20 @@
 import api from '../api/api';
-import MD5 from 'crypto-js/md5';
+import auth from '../api/auth';
 
-const PUBLIC_KEY = '8ffcbe1b384449ecd13de25398c4b2a1';
-const PRIVATE_KEY = '2f26311667c94a3ca6cfef0221517cc671d9eea7';
-const timestamp = new Date().getTime();
-
-const hash = MD5(timestamp + PRIVATE_KEY + PUBLIC_KEY).toString();
+const public_key = auth.getPublicKey();
 
 export default {
+
   getCharacters({offset}) {
-    return api.get(`/characters?&offset=${offset}&ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
+    return api.get(`/characters?&offset=${offset}&ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`);
   },
   getCharacterById(id) {
-    return api.get(`/characters/${id}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
+    return api.get(`/characters/${id}?ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`);
   },
   getCharacterByName(name) {
-    return api.get(`/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
+    return api.get(`/characters?name=${name}&ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`);
   },
   getComicById(id) {
-    return api.get(`/comics/${id}?ts=${timestamp}&apikey=${PUBLIC_KEY}&hash=${hash}`);
+    return api.get(`/comics/${id}?ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`);
   }
 }

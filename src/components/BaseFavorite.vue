@@ -10,7 +10,7 @@
       <img
         v-if="isFavorite"
         src="../assets/favorito_01.svg"
-        alt="favorite"
+        alt="favorite-checked"
       >
       <img
         v-else

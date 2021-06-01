@@ -3,6 +3,7 @@
     <div class="base-search__container">
       <input
         v-model="characterName"
+        name="search"
         class="base-search__input"
         placeholder="Procure por heróis"
         onfocus="placeholder=''"
@@ -76,13 +77,12 @@ export default {
 .base-search {
   display: flex;
   flex-direction: column;
-  height: 80px;
   align-items: center;
+  height: 80px;
 
   &__container {
     display: flex;
     flex-direction: column;
-    width: 50vw;
     height: 50px;
   }
 
@@ -90,6 +90,7 @@ export default {
     flex: 1;
     width: 100%;
     height: 60px;
+    min-width: 450px;
     border-radius: 50px;
     text-indent: 70px;
     border: none;

@@ -190,7 +190,6 @@ export default {
   &__header {
     display: flex;
     
-
     &.search {
       max-width: 500px;
       padding-top: 30px;
@@ -298,11 +297,11 @@ export default {
       font-size: 1.75rem;
     }
   }
-  
 
   &__comics-list {
     margin-left: 20px;
   }
+
   &__container { 
     display: flex;
     align-items: center;
@@ -334,7 +333,6 @@ export default {
 @media screen and (max-width: 1440px) { 
   .character__header {
     display: flex;
-
     flex-wrap: wrap;
   }
   
@@ -342,18 +340,9 @@ export default {
     max-width: 300px;
     margin-top: 1rem;
   }
+
   .character__title{ 
     font-size: 2rem;
-  }
-
-  .character__section {
-  
-    &.search{
-    //margin-top: 30px;
-    width: 300px;
-    background: yellow;
-
-    }
   }
 }
 </style>

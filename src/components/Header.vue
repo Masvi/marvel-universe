@@ -8,10 +8,7 @@
       <h1>Explore o universo</h1>
     </div>
     <div class="header__description">
-      <p>
-        Mergulhe no domínio deslumbrante de todos os personagens 
-        clássicos que você ama - e aqueles que você descobrirá em breve!
-      </p>
+      <p>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</p>
     </div>
   </div>
 </template>

@@ -214,7 +214,6 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: 35px;
-    max-width: 800px;
   }
 
   &__menu {
@@ -295,5 +294,4 @@ export default {
     }
   }
 }
-
 </style>
