@@ -140,6 +140,7 @@ export default {
   },
   methods: {
     handleResponse(response) {
+      console.log(response);
       if (response) {
         return this.currentList = response;    
       }

@@ -50,6 +50,7 @@ export default {
   },
   methods: {
     searchByName() {
+      console.log('enter');
       if (this.characterName !== '') {
         this.$store.dispatch("setLoading");
         
@@ -57,10 +58,11 @@ export default {
           .then(({ data }) => { 
             
             if (!data.data.results[0]) {
-              this.$emit('response', null);
+              return this.$emit('response', null);
             }
 
-            const search = {...data.data.results[0], favorite: false }
+            const search = {...data.data.results[0], favorite: false };
+
             this.checkIfisFavorite(search);   
           })
           .finally(() => this.$store.dispatch("setLoading"));
@@ -71,8 +73,8 @@ export default {
         if (response.id === item.id) {
           response.favorite = true;
         }
-        this.$emit('response', [response]) 
       })
+      this.$emit('response', [response]) 
     },
     onChange() {
       this.$emit('typing', this.characterName)

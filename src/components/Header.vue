@@ -3,6 +3,7 @@
     <img
       src="../assets/logo.svg"
       alt="marvel"
+      @click="redirectToHome()"
     >
     <div class="header__title">
       <h1>Explore o universo</h1>
@@ -15,7 +16,12 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  methods: {
+    redirectToHome() {
+      this.$router.push({ name: "home" });
+    }
+  }
 }
 </script>
 
@@ -40,6 +46,10 @@ export default {
     font-weight: 500;
     font-size: 15px;
     text-align: center;
+  }
+
+  & img {
+    cursor: pointer;
   }
 }
 </style>
