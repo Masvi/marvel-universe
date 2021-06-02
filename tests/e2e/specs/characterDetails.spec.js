@@ -8,22 +8,21 @@ describe('Started in home page', () => {
 
   it('Check if loading is visible in first', () => {
     cy.get('.base-loading').should('be.visible')
-    cy.get('.base-loading').should('not.be.visible')
+    cy.get('.base-loading').should('not.be.visible');
   });
 
   it('trying search a specific characters  of that not exists', () => {
     cy.get('input[name="search"]')
-      .type('Mario').type('{enter}')
+      .type('Mario').type('{enter}');
     
     cy.get('div[data-test="search-details"]')
       .contains('Personagem não encontrado');
   });
 
-  it('Trying show a favorite list', () => {
+  it('Check the alt attribute of images', () => {
     cy.get('span[data-test="favorite-details"]').click()
     cy.get('img').each($el => {
-      cy.wrap($el).should('have.attr', 'alt')
+      cy.wrap($el).should('have.attr', 'alt');
     });
   });
-
 });

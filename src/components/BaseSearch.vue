@@ -2,6 +2,7 @@
   <div class="base-search">
     <div class="base-search__container">
       <input
+        id="search"
         v-model="characterName"
         name="search"
         class="base-search__input"
@@ -50,8 +51,8 @@ export default {
   },
   methods: {
     searchByName() {
-      console.log('enter');
       if (this.characterName !== '') {
+
         this.$store.dispatch("setLoading");
         
         marvelService.getCharacterByName(this.characterName)
@@ -62,7 +63,7 @@ export default {
             }
 
             const search = {...data.data.results[0], favorite: false };
-
+            
             this.checkIfisFavorite(search);   
           })
           .finally(() => this.$store.dispatch("setLoading"));

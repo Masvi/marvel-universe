@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer.vue Footer should be a valid vue component 1`] = `
+<div class="footer">
+  <div class="footer__info"></div>
+</div>
+`;
