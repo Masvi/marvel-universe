@@ -23,6 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { EventBus } from "../plugins/eventBus";
 
 export default {
   name: "BaseFavorite",
@@ -40,16 +41,23 @@ export default {
   computed: {
     ...mapGetters({
       currentFavorites: "getFavorites",
+      getFavorites : "getFavorites"
     }),
   },
   methods: {
     setAsFavorite() {
+      if (this.getFavorites.length === 5 && !this.character.favorite) {
+        EventBus.$emit("favoriteLimite")
+      }
+   
+      if (!this.character.favorite && this.getFavorites.length < 5) {
+        this.character.favorite = true;
+        return this.$store.dispatch("setFavorite", this.character); 
+      }
+
       if (this.character.favorite) {
         this.character.favorite = false;
         this.$store.dispatch("unsetFavorite", this.character); 
-      } else {
-        this.character.favorite = true;
-        return this.$store.dispatch("setFavorite", this.character); 
       }
     },
   }

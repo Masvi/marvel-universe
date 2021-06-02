@@ -159,13 +159,7 @@ export default {
 
           this.characters = data.data.results.map(item => ({...item, favorite: false}));
           
-          this.currentFavorites.forEach(item =>{
-            this.characters.filter(character => { 
-              if (character.id === item.id) {
-                character.favorite = true;
-              }
-            })
-          })
+          this.checkIfisFavorite();
 
           const { count, offset, total } = data.data;
 
@@ -190,8 +184,19 @@ export default {
       this.currentList.reverse();
     },
     showMainList() {
+      this.checkIfisFavorite();
+
       this.onlyFavorites = false;
       this.currentList = this.characters;
+    },
+    checkIfisFavorite() {
+      this.currentFavorites.forEach(item =>{
+        this.characters.filter(character => { 
+          if (character.id === item.id) {
+            character.favorite = true;
+          }
+        })
+      })
     },
     handleLoading() {
       this.$store.dispatch("setLoading");

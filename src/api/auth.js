@@ -5,9 +5,7 @@ export default {
 
   getHashMd5() {
     return MD5(
-      this.getTimeStamp() +
-      process.env.VUE_APP_PRIVATE_KEY + 
-      process.env.VUE_APP_PUBLIC_KEY
+      new Date().getTime()+process.env.VUE_APP_PRIVATE_KEY+process.env.VUE_APP_PUBLIC_KEY
     ).toString();
   },
   getTimeStamp() {

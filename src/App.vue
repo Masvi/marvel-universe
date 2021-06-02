@@ -12,22 +12,17 @@
 
 <script>
 import Footer from './components/Footer';
-import { mapGetters } from 'vuex';
+import { EventBus } from "./plugins/eventBus"
 
 export default {
   name: 'App',
   components: {
     Footer
   },
-  computed: {
-    ...mapGetters({
-      getFavoritesStatus: "getFavoritesStatus",
-    }),
-  },
-  watch: {
-    getFavoritesStatus() {
+  created() {
+    EventBus.$on('favoriteLimite', () => {
       this.showNotification();
-    }
+    })
   },
   methods: {
     showNotification() {

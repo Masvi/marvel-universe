@@ -7,18 +7,14 @@ export default new Vuex.Store({
   state: {
     isLoading: false,
     favorites: [],
-    isFullFavorites : false
   },
   getters: {
     getFavorites({ favorites }) {
       return favorites;
     },
-    getFavoritesStatus({ isFullFavorites }) {
-      return isFullFavorites;
-    },
     getLoading({ isLoading }) {
       return isLoading;
-    },
+    }
   },
   mutations: {
     SET_FAVORITES(state, value) {
@@ -35,16 +31,9 @@ export default new Vuex.Store({
     SET_LOADING(state) {
       state.isLoading = !state.isLoading;
     },
-    SET_FAVORITES_AS_FULL(state) {
-      state.isFullFavorites = !state.isFullFavorites;
-    },
   },
   actions: {
-    setFavorite({ commit, state }, character) {
-      if (state.favorites && state.favorites.length === 5) {
-        return commit('SET_FAVORITES_AS_FULL');
-      }
-      
+    setFavorite({ commit }, character) {
       commit('SET_FAVORITES', character); 
     },
     setFavoritesFromLocalStorage({ commit }, favorites) {
