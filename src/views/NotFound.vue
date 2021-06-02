@@ -3,12 +3,21 @@
     404
     <span>
       Página não encontrada! 
-      <a>
+      <a @click="redirectToHome()">
         voltar
       </a>
     </span>
   </div>  
 </template>
+<script>
+export default {
+  methods: {
+    redirectToHome() {
+      this.$router.push({name: "home"});
+    } 
+  }
+}
+</script>
 <style lang="scss">
 .not-found {
   display: flex;

@@ -16,12 +16,6 @@
       >
     </div>
     <span
-      v-show="showHint && !error"
-      class="base-search__warning"
-    >
-      Pressione enter para buscar
-    </span>
-    <span
       v-show="error"
       class="base-search__warning base-search__warning--error"
     >
@@ -33,6 +27,7 @@
 <script>
 
 import marvelService from '../services/marvelService';
+import { mapGetters } from "vuex";
 
 export default {
   props: {
@@ -40,10 +35,6 @@ export default {
       type: String,
       default: "",
     },
-    searchApi: {
-      type: Boolean,
-      default: false,
-    }
   },
   data() {
     return {
@@ -52,19 +43,36 @@ export default {
       error: false
     }
   },
+    computed: {
+    ...mapGetters({
+      currentFavorites: "getFavorites",
+    }),
+  },
   methods: {
     searchByName() {
-      if (this.searchApi && this.characterName !== '') {
+      if (this.characterName !== '') {
         this.$store.dispatch("setLoading");
         
         marvelService.getCharacterByName(this.characterName)
-          .then(({ data }) => {          
-            (data.data.results[0]) 
-              ? this.$emit('response', data.data.results[0]) 
-              :this.error = true;
+          .then(({ data }) => { 
+            
+            if (!data.data.results[0]) {
+              this.$emit('response', null);
+            }
+
+            const search = {...data.data.results[0], favorite: false }
+            this.checkIfisFavorite(search);   
           })
           .finally(() => this.$store.dispatch("setLoading"));
       }
+    },
+    checkIfisFavorite(response) {    
+      this.currentFavorites.forEach(item =>{
+        if (response.id === item.id) {
+          response.favorite = true;
+        }
+        this.$emit('response', [response]) 
+      })
     },
     onChange() {
       this.$emit('typing', this.characterName)

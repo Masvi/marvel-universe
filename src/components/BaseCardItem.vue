@@ -2,8 +2,8 @@
   <div class="card-item">
     <div class="card-item__photo">
       <img 
-        :src="`${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}`"
-        :alt="character.name"
+        :src="`${current.thumbnail.path}/portrait_xlarge.${current.thumbnail.extension}`"
+        :alt="current.name"
         @click="$emit('click')"
       >
     </div>
@@ -12,11 +12,11 @@
         class="card-item__title"
         @click="$emit('click')"
       >
-        {{ character.name }}
+        {{ current.name }}
       </div>
       <div class="card-item__favorite">
         <base-favorite 
-          :character="character"
+          :character="current"
         />
       </div>
     </div>
@@ -33,6 +33,14 @@ export default {
       default: null
     },
   },
+  data() {
+    return {
+      current: null
+    }
+  },
+  created() {
+    this.current = this.character;
+  }
 }
 </script>
 

@@ -29,9 +29,6 @@ export default {
       this.showNotification();
     }
   },
-  created() {
-    this.$store.dispatch("setLoading");
-  },
   methods: {
     showNotification() {
       this.$toast.open({
@@ -57,7 +54,6 @@ export default {
 
 .app {
   display: flex;
-  //align-items: center;
   flex-direction: column;
   justify-content: space-between;
 }

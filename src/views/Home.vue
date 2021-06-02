@@ -3,85 +3,93 @@
     <Header />
     <div class="home__search-section">
       <base-search 
-        @typing="filterOnList"
+        @typing="handleList"
+        @response="handleResponse"
       />
     </div>
-    <div class="home__menu">
-      <div class="home__menu results">
-        Econtrados {{ metadata.total }} heróis
-      </div>
-      <div class="home__menu home__options">
-        <div>
-          <img
-            src="../assets/icons/ic_heroi.svg"
-            alt="character"
-          >
-          Ordernar por nome - A/Z
+    <div
+      v-if="!isEmpty" 
+    >
+      <div class="home__menu">
+        <div class="home__menu results">
+          Econtrados {{ metadata.total }} heróis
+        </div>
+        <div class="home__menu home__options">
           <div>
-            <base-toggle 
-              :default-checked="sortByName"
-              @input="sort"
-            />
+            <img
+              src="../assets/icons/ic_heroi.svg"
+              alt="character"
+            >
+            Ordernar por nome - A/Z
+            <div>
+              <base-toggle 
+                :default-checked="sortByName"
+                @input="sort"
+              />
+            </div>
+          </div>
+          <div
+            class="home__favorites"
+            @click="showOnlyFavorites()" 
+          >
+            <img
+              v-show="onlyFavorites"
+              src="../assets/favorito_01.svg"
+              alt="favorite"
+            >
+            <img
+              v-show="!onlyFavorites"
+              src="../assets/favorito_02.svg"
+              alt="favorite"
+            >
+            Somente favoritos
           </div>
         </div>
-        <div
-          class="home__favorites"
-          @click="showOnlyFavorites()" 
+      </div>
+      <div 
+        v-if="onlyFavorites" 
+        class="home__title"
+      >
+        Sua lista de favoritos
+      </div>
+      <div class="home__list">
+        <div 
+          v-for="item of currentList"
+          :key="item.id"
         >
-          <img
-            v-show="onlyFavorites"
-            src="../assets/favorito_01.svg"
-            alt="favorite"
-          >
-          <img
-            v-show="!onlyFavorites"
-            src="../assets/favorito_02.svg"
-            alt="favorite"
-          >
-          Somente favoritos
-        </div>
+          <base-card-item
+            :character="item"
+            @click="showDetails(item)"
+          />
+        </div> 
+      </div>
+      <div 
+        v-if="!onlyFavorites && currentList.length > 1"
+        class="home__pagination"
+      >
+        <base-pagination 
+          :metadata="metadata"
+          @handlePagination="updateMetadata"
+        />
+      </div>
+      <span 
+        v-if="onlyFavorites && currentList.length === 0"
+        class="home__list--no-results"
+      >
+        {{ (filter) ? 'Não encontrado' : 'Você não possuí favoritos' }}
+      </span>
+      <div class="home__back">
+        <span
+          v-if="onlyFavorites" 
+          class="home__back"
+          @click="showMainList()"
+        >
+          voltar
+        </span>
       </div>
     </div>
-    <div 
-      v-if="onlyFavorites" 
-      class="home__title"
-    >
-      Sua lista de favoritos
-    </div>
-    <div class="home__list">
-      <div 
-        v-for="item of currentList"
-        :key="item.id"
-      >
-        <base-card-item
-          :character="item"
-          @click="showDetails(item)"
-        />
-      </div> 
-    </div>
-    <div 
-      v-if="!onlyFavorites && currentList.length !== 0"
-      class="home__pagination"
-    >
-      <base-pagination 
-        :metadata="metadata"
-        @handlePagination="updateMetadata"
-      />
-    </div>
-    <span 
-      v-if="onlyFavorites && currentList.length === 0"
-      class="home__list--no-results"
-    >
-      {{ (filter) ? 'Não encontrado' : 'Você não possuí favoritos' }}
-    </span>
-    <div class="home__back">
-      <span
-        v-if="onlyFavorites" 
-        class="home__back"
-        @click="showMainList()"
-      >
-        voltar
-      </span>
+    <div v-else>
+      Personagem não encontrado
     </div>
   </div>
 </template>
@@ -103,6 +111,7 @@ export default {
       onlyFavorites: false,
       sortByName: true,
       filter: false,
+      isEmpty: false,
       metadata:{
         count: 0,
         offset: 0,
@@ -118,7 +127,7 @@ export default {
   },
   created() {
     const storage = JSON.parse(localStorage.getItem('favorites'));
-    
+
     if (storage) {
       this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
     }
@@ -130,12 +139,34 @@ export default {
     this.findCharacters();
   },
   methods: {
+    handleResponse(response) {
+      if (response) {
+        return this.currentList = response;    
+      }
+      this.isEmpty = true;
+    },
+    handleList(value) {
+      if (value === '') {
+        this.isEmpty = false;
+        this.onlyFavorites = false;
+        this.currentList = this.characters;
+      }
+    },
     findCharacters() {
       marvelService
         .getCharacters(this.metadata)
         .then(({ data } ) => {
 
-          this.characters = data.data.results;
+          this.characters = data.data.results.map(item => ({...item, favorite: false}));
+          
+          this.currentFavorites.forEach(item =>{
+            this.characters.filter(character => { 
+              if (character.id === item.id) {
+                character.favorite = true;
+              }
+            })
+          })
+
           const { count, offset, total } = data.data;
 
           this.metadata = {
@@ -153,25 +184,10 @@ export default {
         this.onlyFavorites = true;
         return this.currentList = this.currentFavorites;
       }
-
       this.showMainList();
     },
     sort() {
       this.currentList.reverse();
-    },
-    filterOnList(value) {
-      this.filter = true;
-      const filtered = this.currentList.filter(item => { 
-        return value.toLowerCase().split(' ')
-          .every(v => item.name.toLowerCase().includes(v));
-      });
-
-      this.currentList = filtered;
-        
-      if (value === '') {
-        this.currentList = this.characters;
-        this.filter = false;
-      }
     },
     showMainList() {
       this.onlyFavorites = false;
@@ -187,7 +203,6 @@ export default {
     },
     showDetails(item) {
       const { id } = item;
-
       this.$router.push({ 
         name: "details", 
         params: { 
@@ -256,6 +271,7 @@ export default {
     font-weight: bold;
     padding: 1rem;
     color: $primary-gray;
+    justify-content:center;
    }
 
   &__list {
@@ -278,11 +294,13 @@ export default {
   &__pagination {
     display: flex;
     margin-bottom: 80px;
+    justify-content: center;
   }
 
   &__back {
     display: flex;  
     margin-bottom: 3rem;
+    justify-content:center;
 
     & span {
       cursor: pointer;

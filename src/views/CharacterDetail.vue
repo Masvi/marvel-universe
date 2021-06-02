@@ -12,7 +12,6 @@
       </div>
       <div class="character__header search">
         <base-search 
-          :search-api="true"
           @response="handleResponse"
         />
       </div>
@@ -143,6 +142,7 @@ export default {
   computed: {
     ...mapGetters({
       getLoading: "getLoading",
+      currentFavorites: "getFavorites",
     }),
   },
   created() {
@@ -157,15 +157,25 @@ export default {
     }
 
     const { id } = this.$route.params;
+
     this.findCharacterById(id);
   },
   methods: {
+    checkIfisFavorite(id) {
+      const isFavorite = this.currentFavorites.find((item) => item.id === id);
+
+      if (isFavorite) {
+        this.currentCharacter.favorite = true;
+      }
+    },
     async findCharacterById(id) {
       this.handleLoading();
       
-      await marvelService.getCharacterById(id)
-        .then(({data}) => this.currentCharacter = data.data.results[0]);
-      
+      this.currentCharacter = await marvelService.getCharacterById(id)
+        .then(({data}) =>  (data.data.results[0]) ? {...data.data.results[0], favorite: false }: '');
+
+      this.checkIfisFavorite(this.currentCharacter.id);
+
       await this.findComics(this.currentCharacter);
       
       this.handleLoading();
@@ -193,7 +203,7 @@ export default {
       return items.map(item => item.resourceURI.split("/").pop());
     },
     redirectToHome() {
-       this.$router.push({name: "home"});
+      this.$router.push({ name: "home" });
     }
   }
 }

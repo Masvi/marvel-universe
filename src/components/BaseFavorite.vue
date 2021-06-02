@@ -6,9 +6,9 @@
     <span 
       class="base-favorite__icon"
       :class="{'base-favorite__icon--is-large': isLarge }"
-    >
+    > 
       <img
-        v-if="isFavorite"
+        v-if="character.favorite"
         src="../assets/favorito_01.svg"
         alt="favorite-checked"
       >
@@ -41,19 +41,16 @@ export default {
     ...mapGetters({
       currentFavorites: "getFavorites",
     }),
-    isFavorite() {
-      if (this.currentFavorites && this.currentFavorites.length) {
-        return !!this.currentFavorites.find((item) => item.id === this.character.id)
-      }
-      return false;
-    },
   },
   methods: {
     setAsFavorite() {
-      if (!(this.isFavorite)) {
+      if (this.character.favorite) {
+        this.character.favorite = false;
+        this.$store.dispatch("unsetFavorite", this.character); 
+      } else {
+        this.character.favorite = true;
         return this.$store.dispatch("setFavorite", this.character); 
-      } 
-      this.$store.dispatch("unsetFavorite", this.character); 
+      }
     },
   }
 }
