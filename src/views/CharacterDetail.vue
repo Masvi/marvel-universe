@@ -80,7 +80,9 @@
         </div>      
         <div class="character__info last-comic">
           <label>Último quadrinho:</label>
-          <span>10/02/2001</span>
+          <span>
+            {{ lastComic | formattedDate }}
+          </span>
         </div>
       </div>
     </div>
@@ -102,7 +104,7 @@
             <span
               class="character__comics title"
             >
-              {{ item.title.length>14 ? item.title.substring(0,14)+"..." : item.title }}
+              {{ item.dates[0].date | formattedDate }}
             </span>
           </div>
         </div>
@@ -115,16 +117,23 @@
 import BaseSearch from '../components/BaseSearch.vue';
 import marvelService from '../services/marvelService';
 import { mapGetters } from "vuex";
+import moment from 'moment';
 
 export default {
   name: "CharacterDetail",
   components: { 
     BaseSearch 
   },
+  filters: {
+    formattedDate(date) {
+      return (date) ?  moment(date).format('DD/MM/YYYY') : 'Não encontrado';
+    }
+  },
   data() {
     return {
       currentCharacter: {},
       comics: [],
+      lastComic: null,
       show: false,
     }
   },
@@ -153,20 +162,23 @@ export default {
       
       await marvelService.getCharacterById(id)
         .then(({data}) => this.currentCharacter = data.data.results[0]);
-    
+      
       await this.findComics(this.currentCharacter);
       
       this.handleLoading();
     },
-    findComics({ comics }) {
-      return comics.items.forEach((item) => {
-        marvelService.getComicById(
-          this.resolveUrl(item)
-        )
-        .then(({data}) => {
+    findComics( { comics } ) {
+      const ids = this.resolveUrl(comics);
+      
+      ids.forEach((id) =>  {
+        marvelService.getComicById(id).then(({data}) => {
           this.comics.push(data.data.results[0]);
+          this.setLastSale(this.comics[0]);
         });
-      })
+      });
+    },
+    setLastSale({ dates }) {
+      this.lastComic = dates[0].date;
     },
     handleResponse(value) {
       this.currentCharacter = value;
@@ -174,8 +186,8 @@ export default {
     handleLoading() {
       this.$store.dispatch("setLoading");
     },
-    resolveUrl({ resourceURI }) {
-      return resourceURI.split("/").pop();
+    resolveUrl({ items }) {
+      return items.map(item => item.resourceURI.split("/").pop());
     },
   }
 }
@@ -289,7 +301,7 @@ export default {
       font-size: .75rem;
       color: $primary-black;
       font-weight: 500;
-      cursor: pointer;
+      justify-content: center;
     }
 
     & h1 {
