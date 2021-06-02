@@ -1,7 +1,10 @@
 <template>
   <div class="character">
     <div class="character__header">
-      <div class="character__header logo">
+      <div 
+        class="character__header logo"
+        @click="redirectToHome()"
+      >
         <img
           src="../assets/logo_menor.svg"
           alt="logo"
@@ -189,6 +192,9 @@ export default {
     resolveUrl({ items }) {
       return items.map(item => item.resourceURI.split("/").pop());
     },
+    redirectToHome() {
+       this.$router.push({name: "home"});
+    }
   }
 }
 </script>
@@ -201,6 +207,10 @@ export default {
 
   &__header {
     display: flex;
+
+    &.logo{
+      cursor: pointer;
+    }
     
     &.search {
       max-width: 500px;
