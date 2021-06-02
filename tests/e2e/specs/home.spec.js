@@ -1,16 +1,41 @@
 
 describe('Started in home page', () => {
-
+  
   const baseURL = 'http://localhost:8080/';
+  const apiBase = 'https://gateway.marvel.com/v1/public/';
+  const ts = new Date().getTime();
+  const hash = ts+process.env.VUE_APP_PRIVATE_KEY+process.env.VUE_APP_PUBLIC_KEY;
+
 
   beforeEach(() => {
     cy.visit(baseURL);
   });
 
   it('Check if loading is visible in first', () => {
-    cy.visit('http://localhost:8080/');
     cy.get('.base-loading').should('be.visible')
     cy.get('.base-loading').should('not.be.visible')
+  });
+
+  it('trying search a specific characters  of that not exists', () => {
+    cy.get('input[name="search"]')
+      .type('Mario')
+      .type('Cypress.io{enter}')
+    
+      cy.get('div[data-test="search-home"]').contains(
+        'Personagem não encontrado'
+      );
+  });
+
+  it('trying search characters on api', () => {
+    cy.server()
+      .route(
+        'GET',
+        `${apiBase}/characters?&ts=${ts}&apikey=${process.env.VUE_APP_PUBLIC_KEY}&hash=${hash}`
+      )
+      .its('status')
+      .then((status) => {
+        expect(status).to.eq(200);
+      });
   });
 
   it('Visits the app root url', () => {
@@ -23,9 +48,9 @@ describe('Started in home page', () => {
     cy.get('.card-item__title').contains(' 3-D Man ');
   });
 
-  // it('Mark a character as a favorite', () => {
-  //   cy.get('.card-item__container .base-favorite__icon').click()
-  //   cy.get('base-favorite__icon > img[alt]').contains('favorite-checked')
-  // });
+  it('Trying show a favorite list', () => {
+    cy.get('.home__favorites').click()
+    cy.get('.home__title').contains('Sua lista de favoritos');
+  });
 
-})
+});

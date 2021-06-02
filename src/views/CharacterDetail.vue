@@ -14,6 +14,13 @@
         <base-search 
           @response="handleResponse"
         />
+        <div 
+          v-if="notFound"
+          data-test="search-details"
+          class="character__not-found"
+        >
+          Personagem não encontrado
+        </div>
       </div>
     </div>
     <div class="character__section">
@@ -100,8 +107,10 @@
             :key="i"
             class="character__comics item"
           >
-            <img 
+            <img
+              name="comic" 
               :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
+              :alt="`${item.thumbnail.path}`"
             >
             <span
               class="character__comics title"
@@ -137,6 +146,7 @@ export default {
       comics: [],
       lastComic: null,
       show: false,
+      notFound: false
     }
   },
   computed: {
@@ -194,7 +204,11 @@ export default {
       this.lastComic = dates[0].date;
     },
     handleResponse(value) {
-      this.currentCharacter = value;
+      if (value) {
+        this.notFound = false;
+        return this.currentCharacter = value[0];
+      }
+      this.notFound = true;
     },
     handleLoading() {
       this.$store.dispatch("setLoading");
@@ -223,9 +237,15 @@ export default {
     }
     
     &.search {
+      justify-content:center;
       max-width: 500px;
       padding-top: 30px;
     }
+  }
+
+  &__not-found {
+    color: $secondary-red;
+    font-size: 1rem;
   }
   
   &__section {

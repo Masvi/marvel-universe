@@ -7,89 +7,99 @@
         @response="handleResponse"
       />
     </div>
-    <div
-      v-if="!isEmpty" 
+    <div 
+      v-if="isEmpty && characters.length=== 0"
+      class="home__not-found"
     >
-      <div class="home__menu">
-        <div class="home__menu results">
-          Econtrados {{ metadata.total }} heróis
-        </div>
-        <div class="home__menu home__options">
-          <div>
-            <img
-              src="../assets/icons/ic_heroi.svg"
-              alt="character"
-            >
-            Ordernar por nome - A/Z
-            <div>
-              <base-toggle 
-                :default-checked="sortByName"
-                @input="sort"
-              />
-            </div>
-          </div>
-          <div
-            class="home__favorites"
-            @click="showOnlyFavorites()" 
-          >
-            <img
-              v-show="onlyFavorites"
-              src="../assets/favorito_01.svg"
-              alt="favorite"
-            >
-            <img
-              v-show="!onlyFavorites"
-              src="../assets/favorito_02.svg"
-              alt="favorite"
-            >
-            Somente favoritos
-          </div>
-        </div>
-      </div>
-      <div 
-        v-if="onlyFavorites" 
-        class="home__title"
-      >
-        Sua lista de favoritos
-      </div>
-      <div class="home__list">
-        <div 
-          v-for="item of currentList"
-          :key="item.id"
-        >
-          <base-card-item
-            :character="item"
-            @click="showDetails(item)"
-          />
-        </div> 
-      </div>
-      <div 
-        v-if="!onlyFavorites && currentList.length > 1"
-        class="home__pagination"
-      >
-        <base-pagination 
-          :metadata="metadata"
-          @handlePagination="updateMetadata"
-        />
-      </div>
-      <span 
-        v-if="onlyFavorites && currentList.length === 0"
-        class="home__list--no-results"
-      >
-        {{ (filter) ? 'Não encontrado' : 'Você não possuí favoritos' }}
-      </span>
-      <div class="home__back">
-        <span
-          v-if="onlyFavorites" 
-          class="home__back"
-          @click="showMainList()"
-        >
-          voltar
-        </span>
-      </div>
+      Personagens não encontrados, tente novamente mais tarde!
     </div>
     <div v-else>
-      Personagem não encontrado
+      <div v-if="!isEmpty">
+        <div class="home__menu">
+          <div class="home__menu results">
+            Econtrados {{ metadata.total }} heróis
+          </div>
+          <div class="home__menu home__options">
+            <div>
+              <img
+                src="../assets/icons/ic_heroi.svg"
+                alt="character"
+              >
+              Ordernar por nome - A/Z
+              <div>
+                <base-toggle 
+                  :default-checked="sortByName"
+                  @input="sort"
+                />
+              </div>
+            </div>
+            <div
+              class="home__favorites"
+              @click="showOnlyFavorites()" 
+            >
+              <img
+                v-show="onlyFavorites"
+                src="../assets/favorito_01.svg"
+                alt="favorite"
+              >
+              <img
+                v-show="!onlyFavorites"
+                src="../assets/favorito_02.svg"
+                alt="favorite"
+              >
+              Somente favoritos
+            </div>
+          </div>
+        </div>
+        <div 
+          v-if="onlyFavorites" 
+          class="home__title"
+        >
+          Sua lista de favoritos
+        </div>
+        <div class="home__list">
+          <div 
+            v-for="item of currentList"
+            :key="item.id"
+          >
+            <base-card-item
+              :character="item"
+              @click="showDetails(item)"
+            />
+          </div> 
+        </div>
+        <div 
+          v-if="!onlyFavorites && currentList.length > 1"
+          class="home__pagination"
+        >
+          <base-pagination 
+            :metadata="metadata"
+            @handlePagination="updateMetadata"
+          />
+        </div>
+        <span 
+          v-if="onlyFavorites && currentList.length === 0"
+          class="home__list--no-results"
+        >
+          {{ (filter) ? 'Não encontrado' : 'Você não possuí favoritos' }}
+        </span>
+        <div class="home__back">
+          <span
+            v-if="onlyFavorites" 
+            class="home__back"
+            @click="showMainList()"
+          >
+            voltar
+          </span>
+        </div>
+      </div>
+      <div
+        v-else 
+        data-test="search-home"
+        class="home__search-not-found"
+      >
+        Personagem não encontrado
+      </div>
     </div>
   </div>
 </template>
@@ -140,7 +150,6 @@ export default {
   },
   methods: {
     handleResponse(response) {
-      console.log(response);
       if (response) {
         return this.currentList = response;    
       }
@@ -157,20 +166,21 @@ export default {
       marvelService
         .getCharacters(this.metadata)
         .then(({ data } ) => {
-
           this.characters = data.data.results.map(item => ({...item, favorite: false}));
           
-          this.checkIfisFavorite();
-
-          const { count, offset, total } = data.data;
-
-          this.metadata = {
-            count,
-            offset,
-            total
+          if (this.characters.length > 0) {
+            this.checkIfisFavorite();
+            const { count, offset, total } = data.data;
+  
+            this.metadata = {
+              count,
+              offset,
+              total
+            }
+            return this.currentList = this.characters;
           }
 
-          this.currentList = this.characters;
+          this.isEmpty = true; 
         })
         .finally(() => this.handleLoading());
     },
@@ -316,6 +326,17 @@ export default {
       text-transform: uppercase;
       margin-bottom: 1rem;
     }
+  }
+
+  &__not-found {
+    justify-content:center;
+    text-align: center;
+    margin-top: 20vh;
+  }
+  
+  &__search-not-found {
+    color: $secondary-red;
+    font-size: 1rem;
   }
 }
 </style>

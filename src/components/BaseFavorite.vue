@@ -3,7 +3,8 @@
     class="base-favorite"
     @click="setAsFavorite"
   >
-    <span 
+    <span
+      data-test="favorite-details" 
       class="base-favorite__icon"
       :class="{'base-favorite__icon--is-large': isLarge }"
     > 
