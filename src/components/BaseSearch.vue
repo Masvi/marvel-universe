@@ -16,6 +16,7 @@
     </div>
     <span
       v-show="err"
+      data-test="search-details"
       class="base-search__warning base-search__warning--error"
     >
       Nenhum resultado encontrado

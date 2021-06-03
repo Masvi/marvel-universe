@@ -15,8 +15,8 @@ describe('Started in home page', () => {
     cy.get('input[name="search"]')
       .type('Mario').type('{enter}');
     
-    cy.get('div[data-test="search-details"]')
-      .contains('Personagem não encontrado');
+    cy.get('span[data-test="search-details"]')
+      .contains('Nenhum resultado encontrado');
   });
 
   it('Check the alt attribute of images', () => {
