@@ -3,17 +3,12 @@
     <Header />
     <div class="home__search-section">
       <base-search 
+        :err="isEmpty"
         @typing="handleList"
         @response="handleResponse"
       />
     </div>
-    <div 
-      v-if="isEmpty && characters.length=== 0"
-      class="home__not-found"
-    >
-      Personagens não encontrados, tente novamente mais tarde!
-    </div>
-    <div v-else>
+    <div>
       <div v-if="!isEmpty">
         <div class="home__menu">
           <div class="home__menu results">
@@ -93,13 +88,6 @@
           </span>
         </div>
       </div>
-      <div
-        v-else 
-        data-test="search-home"
-        class="home__search-not-found"
-      >
-        Personagem não encontrado
-      </div>
     </div>
   </div>
 </template>
@@ -136,14 +124,14 @@ export default {
     }),
   },
   created() {
+    if (!this.getLoading) {
+      this.handleLoading();
+    }
+
     const storage = JSON.parse(localStorage.getItem('favorites'));
 
     if (storage) {
       this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
-    }
-    
-    if (!this.getLoading) {
-      this.handleLoading();
     }
 
     this.findCharacters();

@@ -1,10 +1,12 @@
 <template>
   <transition name="fade">
     <div class="base-loading">
-      <img
-        src="../assets/loading.svg"
-        alt="loading"
-      >
+      <div class="base-loading__img">
+        <img
+          src="../assets/loadingdot.svg"
+          alt="loading"
+        >
+      </div>
     </div>
   </transition>
 </template>
@@ -31,7 +33,7 @@ export default {
   background: $secondary-red;
 
   & img {
-    width: 220px;
+    width: 100px;
   }
 }
 </style>

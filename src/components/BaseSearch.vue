@@ -10,14 +10,12 @@
         onfocus="placeholder=''"
         onblur="placeholder='Procure por heróis'" 
         type="text"
-        @focus="() => showHint = !showHint"
-        @blur="() => showHint = !showHint"
         @keyup.enter="searchByName"
         @keyup="onChange"
       >
     </div>
     <span
-      v-show="error"
+      v-show="err"
       class="base-search__warning base-search__warning--error"
     >
       Nenhum resultado encontrado
@@ -36,12 +34,14 @@ export default {
       type: String,
       default: "",
     },
+    err: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
       characterName: '',
-      showHint: false,
-      error: false
     }
   },
     computed: {
