@@ -4,9 +4,7 @@
     <div id="#main">
       <router-view />
     </div>
-    <Footer>
-      Desenvolvido por Jean Masvi
-    </Footer>
+    <Footer />
   </div>
 </template>
 
