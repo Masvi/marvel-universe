@@ -30,20 +30,34 @@
         </div>
       </div>
       <div class="character__container character__container--column">
-        <div 
-          v-if="currentCharacter.description"
-          class="character__description"
-        >
-          <p>  
-            {{ currentCharacter.description }}
-          </p>
+        <div class="character__container character__container--row">
+          <div 
+            v-if="currentCharacter.description"
+            class="character__description"
+          >
+            <p>  
+              {{ currentCharacter.description }}
+            </p>
+          </div>
+          <div 
+            class="character__profile-photo"
+            :class="{'character__profile-photo--empty': !currentCharacter.description }"
+          >
+            <img
+              name="comic" 
+              :src="`${currentCharacter.thumbnail.path}/portrait_xlarge.${currentCharacter.thumbnail.extension}`"
+              :alt="`${currentCharacter.thumbnail.path}`"
+            >
+          </div>
         </div>
-        <span 
-          v-else
-          class="character__description character__description--no-description"
-        >
-          O personagem não possui descrição ainda!
-        </span>
+        <div class="character__description">
+          <span 
+            v-if="!currentCharacter.description"
+            class="character__description character__description--no-description"
+          >
+            O personagem não possui descrição ainda!
+          </span>
+        </div>
       </div>
       <div class="character__container">
         <div class="character__info">
@@ -176,6 +190,8 @@ export default {
       
       this.currentCharacter = await marvelService.getCharacterById(id)
         .then(({data}) =>  (data.data.results[0]) ? {...data.data.results[0], favorite: false }: '');
+      
+      console.log(this.currentCharacter);
 
       this.checkIfisFavorite(this.currentCharacter.id);
 
@@ -247,7 +263,7 @@ export default {
   
   &__section {
     margin-top: 30px;
-    max-width: 400px;
+    max-width: 450px;
     margin-left: 20px;
   }
 
@@ -271,6 +287,18 @@ export default {
     & p {
       letter-spacing: 2.5px;
       line-height: 1.8;
+    }
+  }
+
+  &__profile-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 40px;
+    padding: 20px;
+
+    &--empty {
+      margin-left: 0;
     }
   }
 
@@ -386,7 +414,6 @@ export default {
   }
   
   .character__section {
-    max-width: 300px;
     margin-top: 1rem;
   }
 
