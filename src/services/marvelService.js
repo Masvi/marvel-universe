@@ -9,6 +9,7 @@ export default {
     return api.get(`/characters?&offset=${offset}&ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`);
   },
   getCharacterById(id) {
+
     return api.get(`/characters/${id}?ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`);
   },
   getCharacterByName(name) {

@@ -12,15 +12,9 @@
       </div>
       <div class="character__header search">
         <base-search 
+          :err="isEmpty"
           @response="handleResponse"
         />
-        <div 
-          v-if="notFound"
-          data-test="search-details"
-          class="character__not-found"
-        >
-          Personagem não encontrado
-        </div>
       </div>
     </div>
     <div class="character__section">
@@ -145,8 +139,7 @@ export default {
       currentCharacter: {},
       comics: [],
       lastComic: null,
-      show: false,
-      notFound: false
+      isEmpty: false
     }
   },
   computed: {
@@ -188,7 +181,6 @@ export default {
 
       await this.findComics(this.currentCharacter);
       
-      this.handleLoading();
     },
     findComics( { comics } ) {
       const ids = this.resolveUrl(comics);
@@ -199,16 +191,21 @@ export default {
           this.setLastSale(this.comics[0]);
         });
       });
+
+      this.handleLoading();
     },
     setLastSale({ dates }) {
       this.lastComic = dates[0].date;
     },
     handleResponse(value) {
       if (value) {
-        this.notFound = false;
-        return this.currentCharacter = value[0];
+        this.isEmpty = false;
+        this.currentCharacter = value[0];
+        this.handleLoading();
+
+        return this.findComics(this.currentCharacter); 
       }
-      this.notFound = true;
+      this.isEmpty = true;
     },
     handleLoading() {
       this.$store.dispatch("setLoading");
