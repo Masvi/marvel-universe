@@ -5,7 +5,7 @@
 This is a small project that consumes the [Marvel API](https://developer.marvel.com/) and displays characters. In each character you'll find the last 10 comics sold for that character.
 You can favorite up to 5 characters!
 
-[Check the demo](https://marveluniverseluizalabs.netlify.app/)
+
 
 #### :clipboard: Prerequisities
 
