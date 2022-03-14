@@ -2,8 +2,8 @@
   <div class="base-search">
     <div class="base-search__container">
       <input
-        id="search"
         v-model="characterName"
+        data-testid="search-home"
         name="search"
         class="base-search__input"
         placeholder="Procure por heróis"
@@ -16,7 +16,7 @@
     </div>
     <span
       v-show="err"
-      data-test="search-details"
+      data-testid="search-err"
       class="base-search__warning base-search__warning--error"
     >
       Nenhum resultado encontrado
