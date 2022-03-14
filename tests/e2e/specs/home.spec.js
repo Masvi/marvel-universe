@@ -17,12 +17,11 @@ describe('Started in home page', () => {
   });
 
   it('trying search a specific characters  of that not exists', () => {
-    cy.get('input[name="search"]')
-      .type('Mario')
-      .type('Cypress.io{enter}')
-    
-      cy.get('div[data-test="search-home"]').contains(
-        'Personagem não encontrado'
+    cy.get('[data-testid=search-home]')
+      .type('Mario{enter}')
+      cy.wait(300);
+      cy.get('[data-testid=search-err]').contains(
+        'Nenhum resultado encontrado'
       );
   });
 

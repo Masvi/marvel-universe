@@ -1,5 +1,5 @@
 
-describe('Started in home page', () => {
+describe('Started character details', () => {
   
   const baseURL = 'http://localhost:8080/details/1009144';  
   beforeEach(() => {
@@ -15,7 +15,8 @@ describe('Started in home page', () => {
     cy.get('input[name="search"]')
       .type('Mario').type('{enter}');
     
-    cy.get('span[data-test="search-details"]')
+    cy.wait(300);
+    cy.get('[data-testid=search-err]')
       .contains('Nenhum resultado encontrado');
   });
 
