@@ -227,6 +227,7 @@ export default {
   justify-content: center;
   flex-direction: column;
   padding: 0 4rem;
+  max-width: 800px;
  
   &__search-section {
     display: flex;
@@ -238,7 +239,6 @@ export default {
   &__menu {
     display: flex;
     justify-content: space-between;
-    margin: 1.5rem 1.5rem;
     
     &.results { 
       font-size: 1.2rem;
@@ -281,7 +281,6 @@ export default {
   &__list {
     display: flex;
     justify-content:center;
-    flex-direction: row;
     flex-wrap: wrap;
     max-width: 800px;
 

@@ -48,8 +48,10 @@ export default {
 .card-item {
   width: 150px;
   height: 310px;
-  padding: .75rem;
+  margin-right: 10px;
 
+* > :first-child { margin-top: 0 !important; margin-left: 0 !important; }
+* > :last-child { margin-bottom: 0 !important; margin-right: 0 !important; }
   &__photo {
     height: 224px;
     border-bottom: 2.5px solid $secondary-red;
