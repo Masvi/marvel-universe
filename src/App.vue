@@ -36,14 +36,13 @@ export default {
 </script>
 
 <style lang="scss">
-
 * {
-  margin: 0;
-  padding: 0;
+  /* margin: 0;
+  padding: 0; */
   font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} 
 
 .app {
   display: flex;
@@ -51,5 +50,4 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
-
 </style>

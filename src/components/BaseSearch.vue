@@ -90,28 +90,26 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80px;
 
   &__container {
     display: flex;
     flex-direction: column;
-    height: 50px;
+    height: 3rem;
   }
 
   &__input{
     flex: 1;
     width: 100%;
-    height: 60px;
-    min-width: 450px;
+    min-width: 20rem;
     border-radius: 50px;
-    text-indent: 70px;
+    text-indent: 4rem;
     border: none;
     outline: none;
     background: $primary-red url(../assets/icons/ic_busca.svg) no-repeat 20px 10px;
     transition: all .4s;
   }
 
-  &__warning {
+  /* &__warning {
     font-size: .75rem;
     margin-top: 10px;
     color: $primary-gray;
@@ -123,7 +121,6 @@ export default {
 
   ::-webkit-input-placeholder {
     color: $secondary-red;
-  }
+  } */
 }
-
 </style>

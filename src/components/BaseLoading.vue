@@ -3,7 +3,7 @@
     <div class="base-loading">
       <div class="base-loading__img">
         <img
-          src="../assets/loadingdot.svg"
+          src="../assets/loading.svg"
           alt="loading"
         >
       </div>
@@ -33,7 +33,8 @@ export default {
   background: $secondary-red;
 
   & img {
-    width: 100px;
-  }
+    width: 5rem;
+    height: 5rem;
+  } 
 }
 </style>

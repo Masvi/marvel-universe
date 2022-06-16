@@ -1,57 +1,52 @@
 <template>
   <div class="card-item">
     <div class="card-item__photo">
-      <img 
+      <img
         :src="`${current.thumbnail.path}/portrait_xlarge.${current.thumbnail.extension}`"
         :alt="current.name"
         @click="$emit('click')"
       >
     </div>
     <div class="card-item__container">
-      <div 
+      <div
         class="card-item__title"
         @click="$emit('click')"
       >
         {{ current.name }}
       </div>
       <div class="card-item__favorite">
-        <base-favorite 
-          :character="current"
-        />
+        <base-favorite :character="current" />
       </div>
     </div>
   </div>
 </template>
-    
-<script>
 
+<script>
 export default {
   props: {
     character: {
       type: Object,
       required: true,
-      default: null
+      default: null,
     },
   },
   data() {
     return {
-      current: null
-    }
+      current: null,
+    };
   },
   created() {
     this.current = this.character;
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .card-item {
   width: 150px;
   height: 310px;
-  margin-right: 10px;
+  padding: .3rem;
 
-* > :first-child { margin-top: 0 !important; margin-left: 0 !important; }
-* > :last-child { margin-bottom: 0 !important; margin-right: 0 !important; }
   &__photo {
     height: 224px;
     border-bottom: 2.5px solid $secondary-red;
@@ -64,7 +59,7 @@ export default {
 
   &__title {
     font-weight: 800;
-    font-size: .75rem;
+    font-size: 0.75rem;
     color: $primary-black;
     cursor: pointer;
   }

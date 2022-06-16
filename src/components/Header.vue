@@ -31,6 +31,7 @@ export default {
   align-items: center;
   flex-direction: column;
 
+
   &__title {
     & h1 {
       color: $primary-black;
@@ -46,6 +47,9 @@ export default {
     font-weight: 500;
     font-size: 15px;
     text-align: center;
+    padding: .5rem;
+    margin: .75rem;
+    max-width: 800px;
   }
 
   & img {
