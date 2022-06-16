@@ -15,7 +15,7 @@ export default {
 <style lang="scss" scoped>
 
 .footer {
-  display: flex;
+  /* display: flex;
   justify-content:center;
   align-items:center;
 
@@ -31,6 +31,6 @@ export default {
   &__info {
     color: $primary-red;
     font-size: .75rem;
-  }
+  } */
 }
 </style>

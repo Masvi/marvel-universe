@@ -29,6 +29,7 @@ export default {
 .header {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 
 
@@ -47,8 +48,7 @@ export default {
     font-weight: 500;
     font-size: 15px;
     text-align: center;
-    padding: .5rem;
-    margin: .75rem;
+   
     max-width: 800px;
   }
 

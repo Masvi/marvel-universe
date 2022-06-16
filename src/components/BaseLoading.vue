@@ -26,8 +26,8 @@ export default {
   top: 0;
   left: 0;
   z-index: 10;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   
   background: $secondary-red;

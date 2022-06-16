@@ -48,7 +48,6 @@ export default {
 .base-toggle {
   display: flex;
   align-items: center;
-  padding: 6px;
 
   &__slider {
     position: relative;

@@ -8,15 +8,13 @@
         @response="handleResponse"
       />
     </div>
-    <div class="home__menu">
-      <base-list-menu
-        :metadata="metadata"
-        :only-favorites="onlyFavorites"
-        :sort-by-name="sortByName"
-        @favorite-only="showOnlyFavorites"
-      />
-    </div>
-    <div class="home__list">
+    <base-list-menu
+      :metadata="metadata"
+      :only-favorites="onlyFavorites"
+      :sort-by-name="sortByName"
+      @favorite-only="showOnlyFavorites"
+    />
+    <!-- <div class="home__list">
       <base-card-item
         v-for="item of currentList"
         :key="item.id"
@@ -47,7 +45,7 @@
       >
         voltar
       </span>
-    </div>
+    </div>  -->
   </div>
 </template>
 
@@ -187,7 +185,7 @@ export default {
   justify-content: center;
   flex-direction: column;
 
-  &__search-section {
+  /* &__search-section {
     padding: 1rem;
   }
 
@@ -215,7 +213,6 @@ export default {
 
   &__list {
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     max-width: 800px;
 
@@ -263,6 +260,6 @@ export default {
   &__search-not-found {
     color: $secondary-red;
     font-size: 1rem;
-  }
+  } */
 }
 </style>

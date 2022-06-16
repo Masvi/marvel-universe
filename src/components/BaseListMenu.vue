@@ -1,20 +1,20 @@
 <template>
   <div class="base-list-menu">
     <div class="base-list-menu results">
-      {{ test }}
+      {{ resolveCounter }}
     </div>
-    <div class="base-list-menu base-list-menu__options">
+    
+    <div class="base-list-menu base-list-menu__actions">
       <img
         src="../assets/icons/ic_heroi.svg"
         alt="character"
       >
-      Ordernar por nome - A/Z
-      <div>
-        <base-toggle
-          :default-checked="sortByName"
-          @input="sort"
-        />
-      </div>
+      Ordernar A/Z
+      <base-toggle
+        :default-checked="sortByName"
+        @input="sort"
+      />
+             
       <div
         class="base-list-menu__favorites"
         @click="showOnlyFavorites()"
@@ -29,7 +29,7 @@
           src="../assets/favorito_02.svg"
           alt="favorite"
         >
-        Somente favoritos
+        <span>Somente favoritos</span>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
     onlyFavorites: Boolean,
   },
   computed: {
-    test() {
+    resolveCounter() {
       return !this.onlyFavorites
         ? `Econtrados ${this.metadata.total} heróis`
         : "Favoritos encontrados";
@@ -63,19 +63,32 @@ export default {
 <style lang="scss" scoped>
 .base-list-menu {
   display: flex;
-  justify-content: space-between;
-  font-size: .80rem;
-  padding: .2rem;
-  width: 800px;
+  padding: 0.2rem;
+  font-size: 0.8rem;
 
   &.results {
-    font-weight: bold;
+    font-weight: 500;
     color: $primary-gray;
   }
 
-  & img {
-    padding: .2rem;
+  &__actions {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
   }
+
+  &__favorites {
+    align-items: flex-end;
+    justify-content: flex-end;
+/* 
+    & span {
+      text-align: end;
+    } */
+  }
+
+  /* & img {
+    padding: .2rem;
+  }  */
 
   & div {
     display: flex;

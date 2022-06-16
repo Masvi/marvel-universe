@@ -37,8 +37,6 @@ export default {
 
 <style lang="scss">
 * {
-  /* margin: 0;
-  padding: 0; */
   font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -47,7 +45,8 @@ export default {
 .app {
   display: flex;
   align-items: center;
-  flex-direction: column;
-  justify-content: space-between;
+  
+  flex-direction: column; 
+  /* justify-content: space-between; */
 }
 </style>
