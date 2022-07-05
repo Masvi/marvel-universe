@@ -3,18 +3,20 @@
     <div class="base-list-menu results">
       {{ resolveCounter }}
     </div>
-    
+
     <div class="base-list-menu base-list-menu__actions">
       <img
         src="../assets/icons/ic_heroi.svg"
         alt="character"
       >
-      Ordernar A/Z
+      <span>
+        A/Z
+      </span>
       <base-toggle
         :default-checked="sortByName"
         @input="sort"
       />
-             
+
       <div
         class="base-list-menu__favorites"
         @click="showOnlyFavorites()"
@@ -29,7 +31,7 @@
           src="../assets/favorito_02.svg"
           alt="favorite"
         >
-        <span>Somente favoritos</span>
+        <span>Favoritos</span>
       </div>
     </div>
   </div>
@@ -39,7 +41,7 @@
 export default {
   props: {
     metadata: {
-      type: Object,
+      type: Array,
       default: null,
     },
     sortByName: Boolean,
@@ -47,9 +49,9 @@ export default {
   },
   computed: {
     resolveCounter() {
-      return !this.onlyFavorites
-        ? `Econtrados ${this.metadata.total} heróis`
-        : "Favoritos encontrados";
+      return this.metadata.length === 1
+        ? `${this.metadata.length} herói encotrado`
+        : `Econtrados ${this.metadata.length} heróis`;
     },
   },
   methods: {
@@ -63,8 +65,12 @@ export default {
 <style lang="scss" scoped>
 .base-list-menu {
   display: flex;
-  padding: 0.2rem;
+  padding: 1rem;
   font-size: 0.8rem;
+
+  &__favorites {
+    color: $primary-gray;
+  }
 
   &.results {
     font-weight: 500;
@@ -75,20 +81,15 @@ export default {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
-  }
-
-  &__favorites {
-    align-items: flex-end;
-    justify-content: flex-end;
-/* 
+    
     & span {
-      text-align: end;
-    } */
+      margin-right: 5px;
+    }
   }
 
-  /* & img {
-    padding: .2rem;
-  }  */
+  & img {
+    padding: .3rem;
+  }
 
   & div {
     display: flex;

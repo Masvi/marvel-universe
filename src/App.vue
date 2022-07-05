@@ -42,11 +42,4 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 } 
 
-.app {
-  display: flex;
-  align-items: center;
-  
-  flex-direction: column; 
-  /* justify-content: space-between; */
-}
 </style>

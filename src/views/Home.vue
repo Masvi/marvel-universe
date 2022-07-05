@@ -9,12 +9,12 @@
       />
     </div>
     <base-list-menu
-      :metadata="metadata"
+      :metadata="currentList"
       :only-favorites="onlyFavorites"
       :sort-by-name="sortByName"
       @favorite-only="showOnlyFavorites"
     />
-    <!-- <div class="home__list">
+    <div class="home__list">
       <base-card-item
         v-for="item of currentList"
         :key="item.id"
@@ -45,7 +45,7 @@
       >
         voltar
       </span>
-    </div>  -->
+    </div>
   </div>
 </template>
 
@@ -185,7 +185,7 @@ export default {
   justify-content: center;
   flex-direction: column;
 
-  /* &__search-section {
+  &__search-section {
     padding: 1rem;
   }
 
@@ -215,6 +215,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     max-width: 800px;
+    justify-content: center;
 
     &--no-results {
       display: flex;
@@ -260,6 +261,6 @@ export default {
   &__search-not-found {
     color: $secondary-red;
     font-size: 1rem;
-  } */
+  }
 }
 </style>
