@@ -65,11 +65,14 @@ export default {
 <style lang="scss" scoped>
 .base-list-menu {
   display: flex;
-  padding: 1rem;
+  margin: 0 5px 0 5px;
   font-size: 0.8rem;
+  max-width: 800px;
+  width: 100%;
 
   &__favorites {
     color: $primary-gray;
+    font-weight: 500;
   }
 
   &.results {
@@ -81,6 +84,7 @@ export default {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    cursor: pointer;
     
     & span {
       margin-right: 5px;
