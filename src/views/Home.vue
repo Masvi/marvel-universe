@@ -1,7 +1,12 @@
 <template>
-  <div class="home">
+  <div
+    ref="top"
+    class="home"
+  >
     <Header />
-    <div class="home__search-section">
+    <div
+      class="home__search-section"
+    >
       <base-search
         :err="isEmpty"
         @typing="handleList"
@@ -160,6 +165,7 @@ export default {
       this.$store.dispatch("setLoading");
     },
     updateMetadata(value) {
+      this.$refs.top.scrollIntoView()
       this.metadata.offset = value;
       this.handleLoading();
       this.findCharacters();
