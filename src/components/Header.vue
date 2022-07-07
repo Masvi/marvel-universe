@@ -32,7 +32,6 @@ export default {
   justify-content: center;
   flex-direction: column;
 
-
   &__title {
     & h1 {
       color: $primary-black;

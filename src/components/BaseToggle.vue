@@ -29,8 +29,8 @@ export default {
   },
   watch: {
     defaultChecked() {
-      this.checked = this.defaultChecked
-      this.change()           
+      this.checked = this.defaultChecked;
+      this.change();          
     }
   },
   created() {
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     change() {
-      this.$emit("input", this.checked)
+      this.$emit("input", this.checked);
     },  
   }
 }

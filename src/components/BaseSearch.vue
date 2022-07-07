@@ -76,10 +76,10 @@ export default {
           response.favorite = true;
         }
       })
-      this.$emit('response', [response]) 
+      this.$emit('response', [response]); 
     },
     onChange() {
-      this.$emit('typing', this.characterName)
+      this.$emit('typing', this.characterName);
     }
   }
 }
@@ -109,7 +109,7 @@ export default {
     transition: all .4s;
   }
 
-  /* &__warning {
+  &__warning {
     font-size: .75rem;
     margin-top: 10px;
     color: $primary-gray;
@@ -121,6 +121,6 @@ export default {
 
   ::-webkit-input-placeholder {
     color: $secondary-red;
-  } */
+  }
 }
 </style>

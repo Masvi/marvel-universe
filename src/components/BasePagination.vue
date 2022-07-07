@@ -28,17 +28,17 @@ export default {
   },
   computed: {
     disableBtn() {
-      return (this.metadata.offset === 0)
+      return (this.metadata.offset === 0);
     }
   },
   methods: {
     next() { 
       let { offset } = this.metadata;
-      this.$emit('handlePagination', offset + 20) 
+      this.$emit('handlePagination', offset + 20);
     },
     prev() { 
       let { offset } = this.metadata;
-      this.$emit('handlePagination', offset - 20) 
+      this.$emit('handlePagination', offset - 20); 
     }
   }
 }
@@ -46,7 +46,6 @@ export default {
 
 <style lang="scss" scoped>
 .base-pagination {
-
   &__button {
     color: $secondary-red;
     font-weight: 500;

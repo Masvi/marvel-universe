@@ -4,7 +4,7 @@
     <div id="#main">
       <router-view />
     </div>
-    <Footer />
+    <Footer>Every generation needs a hero</Footer>
   </div>
 </template>
 

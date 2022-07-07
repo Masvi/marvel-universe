@@ -48,7 +48,7 @@ export default {
   methods: {
     setAsFavorite() {
       if (this.getFavorites.length === 5 && !this.character.favorite) {
-        EventBus.$emit("favoriteLimite")
+        EventBus.$emit("favoriteLimite");
       }
    
       if (!this.character.favorite && this.getFavorites.length < 5) {

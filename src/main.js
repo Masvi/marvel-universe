@@ -5,9 +5,6 @@ import baseComponents from './plugins/baseComponents.js'
 import router from './router/routes'
 import store from "./store";
 
-/**
- * styles
- */
 import 'vue-toast-notification/dist/theme-default.css';
 
 Vue.config.productionTip = false;
