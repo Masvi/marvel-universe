@@ -16,7 +16,7 @@
     <base-list-menu
       :metadata="currentList"
       :only-favorites="onlyFavorites"
-      :sort-by-name="sortByName"
+      @sort="sort"
       @favorite-only="showOnlyFavorites"
     />
     <div class="home__list">
@@ -68,7 +68,6 @@ export default {
       characters: [],
       currentList: [],
       onlyFavorites: false,
-      sortByName: true,
       filter: false,
       isEmpty: false,
       metadata: {

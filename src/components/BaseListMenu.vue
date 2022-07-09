@@ -50,7 +50,7 @@ export default {
   computed: {
     resolveCounter() {
       return this.metadata.length === 1
-        ? `${this.metadata.length} herói encotrado`
+        ? `Encontrado ${this.metadata.length} herói`
         : `Econtrados ${this.metadata.length} heróis`;
     },
   },
@@ -58,6 +58,9 @@ export default {
     showOnlyFavorites() {
       this.$emit("favorite-only");
     },
+    sort() {
+      this.$emit("sort");
+    }
   },
 };
 </script>
