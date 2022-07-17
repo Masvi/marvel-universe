@@ -4,6 +4,6 @@ module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:8080',
     supportFile: 'cypress/support/e2e.js',
-    specPattern: '/cypress/integration/**/*'
+    specPattern: '/cypress/integration/**/*.cy.{js,jsx,ts,tsx}'
   },
 });
