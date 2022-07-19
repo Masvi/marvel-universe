@@ -5,10 +5,16 @@
       alt="marvel"
       @click="redirectToHome()"
     >
-    <div class="header__title">
+    <div
+      data-testid="main-title"
+      class="header__title"
+    >
       <h1>Explore o universo</h1>
     </div>
-    <div class="header__description">
+    <div
+      data-testid="main-description"
+      class="header__description"
+    >
       <p>Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!</p>
     </div>
   </div>

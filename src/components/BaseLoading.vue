@@ -1,6 +1,9 @@
 <template>
   <transition name="fade">
-    <div class="base-loading">
+    <div
+      data-testid="loading"
+      class="base-loading"
+    >
       <div class="base-loading__img">
         <img
           src="../assets/loading.svg"
@@ -13,11 +16,11 @@
 
 <script>
 export default {
-  name: 'BaseLoading'
-}
+  name: 'BaseLoading',
+};
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 .base-loading {
   display: flex;
   justify-content: center;
@@ -34,6 +37,6 @@ export default {
   & img {
     width: 5rem;
     height: 5rem;
-  } 
+  }
 }
 </style>

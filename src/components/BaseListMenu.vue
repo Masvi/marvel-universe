@@ -18,6 +18,7 @@
       />
 
       <div
+        data-testid="favorites"
         class="base-list-menu__favorites"
         @click="showOnlyFavorites()"
       >

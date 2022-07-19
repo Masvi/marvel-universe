@@ -9,6 +9,7 @@
     </div>
     <div class="card-item__container">
       <div
+        data-testid="card-item"
         class="card-item__title"
         @click="$emit('click')"
       >

@@ -38,6 +38,7 @@
     </div>
     <span
       v-if="onlyFavorites && currentList.length === 0"
+      data-testid="no-results"
       class="home__list--no-results"
     >
       {{ filter ? "Não encontrado" : "Você não possuí favoritos" }}

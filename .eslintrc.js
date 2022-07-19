@@ -20,11 +20,4 @@ module.exports = {
   rules: {
     'vue/no-unused-vars': 'error'
   },
-  overrides: [
-    {
-      env: {
-        jest: true,
-      },
-    },
-  ],
 }

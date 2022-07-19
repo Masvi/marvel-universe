@@ -1,55 +1,37 @@
-
-describe('Started in home page', () => {
-  
-  const baseURL = 'http://localhost:8080/';
-  const apiBase = 'https://gateway.marvel.com/v1/public/';
-  const ts = new Date().getTime();
-  const hash = ts+process.env.VUE_APP_PRIVATE_KEY+process.env.VUE_APP_PUBLIC_KEY;
-
-
+describe("[Home page]", () => {
   beforeEach(() => {
-    cy.visit(baseURL);
+    cy.visit("/");
   });
 
-  it('Check if loading is visible in first', () => {
-    cy.get('.base-loading').should('be.visible')
-    cy.get('.base-loading').should('not.be.visible')
+  it("should show loading in first and remove it", () => {
+    cy.getById("loading").should("be.visible");
+    cy.getById("loading").should("not.be.visible");
   });
 
-  it('trying search a specific characters  of that not exists', () => {
-    cy.get('[data-testid=search-home]')
-      .type('Mario{enter}')
-      cy.wait(300);
-      cy.get('[data-testid=search-err]').contains(
-        'Nenhum resultado encontrado'
-      );
+  it("should show a not find message when search a not valid character", () => {
+    cy.getById("search-home").type("Mario{enter}").then(() => {
+      cy.getById("search-err").contains("Nenhum resultado encontrado");  
+    })
   });
 
-  it('trying search characters on api', () => {
-    cy.server()
-      .route(
-        'GET',
-        `${apiBase}/characters?&ts=${ts}&apikey=${process.env.VUE_APP_PUBLIC_KEY}&hash=${hash}`
-      )
-      .its('status')
-      .then((status) => {
-        expect(status).to.eq(200);
-      });
+  it("should find the title and description", () => {
+    cy.getById("main-title").should(
+      "have.text",
+      "Explore o universo"
+    );
+    cy.getById("main-description").should(
+      "have.text",
+      "Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!"
+    );
   });
 
-  it('Visits the app root url', () => {
-    cy.get('.header > .header__title').should('have.text', 'Explore o universo');
-    cy.get('.header > .header__description').should('have.text', 'Mergulhe no domínio deslumbrante de todos os personagens clássicos que você ama - e aqueles que você descobrirá em breve!');
+  it("should search character in home page", () => {
+    cy.getById('search-home').type("3-D Man");
+    cy.getById("card-item").contains(" 3-D Man ");
   });
 
-  it('Search a character in home page', () => {
-    cy.get('input[name="search"]').type('3-D Man')
-    cy.get('.card-item__title').contains(' 3-D Man ');
+  it("should click in favorites options and open a empty list", () => {
+    cy.getById("favorites").click();
+    cy.getById("no-results").contains("Você não possuí favoritos");
   });
-
-  it('Trying show a favorite list', () => {
-    cy.get('.home__favorites').click()
-    cy.get('.home__title').contains('Sua lista de favoritos');
-  });
-
 });
