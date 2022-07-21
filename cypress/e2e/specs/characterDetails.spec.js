@@ -1,29 +1,25 @@
-
-describe('Started character details', () => {
-  
-  const baseURL = 'http://localhost:8080/details/1009144';  
+describe("[Detail page]", () => {
   beforeEach(() => {
-    cy.visit(baseURL);
+    cy.visit("/details/1011334");
   });
 
-  it('Check if loading is visible in first', () => {
-    cy.get('.base-loading').should('be.visible')
-    cy.get('.base-loading').should('not.be.visible');
+  it("should show loading in first and remove it", () => {
+    cy.getById("loading").should("be.visible");
+    cy.getById("loading").should("not.be.visible");
   });
 
-  it('trying search a specific characters  of that not exists', () => {
-    cy.get('input[name="search"]')
-      .type('Mario').type('{enter}');
-    
-    cy.wait(300);
-    cy.get('[data-testid=search-err]')
-      .contains('Nenhum resultado encontrado');
+  it("should render title correctly", () => {
+    cy.getById("name-title").should("have.text", " 3-D Man ");
   });
 
-  it('Check the alt attribute of images', () => {
-    cy.get('span[data-test="favorite-details"]').click()
-    cy.get('img').each($el => {
-      cy.wrap($el).should('have.attr', 'alt');
+  it("should check the alt attribute of images", () => {
+    cy.get("img").each(($el) => {
+      cy.wrap($el).should("have.attr", "alt");
     });
+  });
+
+  it("should favorited a character correctly", () => {
+    cy.getById("favorite-icon").click()
+    cy.getById("icon-01").should("be.visible");
   });
 });

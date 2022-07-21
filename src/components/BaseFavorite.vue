@@ -4,7 +4,7 @@
     @click="setAsFavorite"
   >
     <span
-      data-test="favorite-details" 
+      data-testid="favorite-icon" 
       class="base-favorite__icon"
       :class="{'base-favorite__icon--is-large': isLarge }"
     > 
@@ -12,11 +12,13 @@
         v-if="character.favorite"
         src="../assets/favorito_01.svg"
         alt="favorite-checked"
+        data-testid="icon-01"
       >
       <img
         v-else
         src="../assets/favorito_02.svg"
         alt="favorite"
+        data-testid="icon-02"
       >
     </span>
   </div>

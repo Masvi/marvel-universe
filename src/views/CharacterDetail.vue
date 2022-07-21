@@ -19,7 +19,10 @@
     </div>
     <div class="character__section">
       <div class="character__container character__container--between">
-        <div class="character__section character__title">
+        <div
+          data-testid="name-title"
+          class="character__section character__title"
+        >
           {{ currentCharacter.name }}
         </div>
         <div class="character__section">
