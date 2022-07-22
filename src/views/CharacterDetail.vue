@@ -109,17 +109,23 @@
     <div class="character__container--column">
       <div class="character__comics-list">
         <div class="character__comics">
-          <h1>Últimos lançamentos</h1>
+          <h1 data-testid="secondary-title">
+            Últimos lançamentos
+          </h1>
         </div>
-        <div class="character__container character__container--wrap">
+        <div
+          data-testid="editions-list"
+          class="character__container character__container--wrap"
+        >
           <div
             v-for="(item, i) of comics"
             v-show="i < 10"
             :key="i"
             class="character__comics item"
+            data-testid="latest-editions"
           >
             <img
-              name="comic" 
+              name="comic"
               :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
               :alt="`${item.thumbnail.path}`"
             >
@@ -404,7 +410,7 @@ export default {
 
     &--wrap {
       flex-wrap: wrap;
-      max-width: 700px;
+      max-width: 40rem;
       margin-bottom: 80px;
     }
   }

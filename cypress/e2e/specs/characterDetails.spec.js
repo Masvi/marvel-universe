@@ -22,4 +22,8 @@ describe("[Detail page]", () => {
     cy.getById("favorite-icon").click()
     cy.getById("icon-01").should("be.visible");
   });
+
+  it("should render subtitle correctly", () => {
+    cy.getById("secondary-title").contains("Últimos lançamentos")
+  });
 });
