@@ -38,6 +38,7 @@ export default {
   },
   created() {
     this.current = this.character;
+    console.log(this.current);
   },
 };
 </script>

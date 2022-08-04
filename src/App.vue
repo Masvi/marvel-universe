@@ -18,9 +18,7 @@ export default {
     Footer
   },
   created() {
-    EventBus.$on('favoriteLimite', () => {
-      this.showNotification();
-    })
+    EventBus.$on('favoriteLimite', () => this.showNotification())
   },
   methods: {
     showNotification() {
@@ -40,6 +38,5 @@ export default {
   font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-} 
-
+}
 </style>
