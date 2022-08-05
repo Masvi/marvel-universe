@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  name: "BaseCardItem",
   props: {
     character: {
       type: Object,
@@ -38,7 +39,6 @@ export default {
   },
   created() {
     this.current = this.character;
-    console.log(this.current);
   },
 };
 </script>
