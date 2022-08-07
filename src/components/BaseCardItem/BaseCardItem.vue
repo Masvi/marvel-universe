@@ -47,7 +47,7 @@ export default {
 .card-item {
   width: 150px;
   height: 310px;
-  padding: .3rem;
+  padding: 0.3rem;
 
   &__photo {
     height: 224px;

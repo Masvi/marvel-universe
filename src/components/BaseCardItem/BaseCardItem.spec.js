@@ -1,4 +1,4 @@
-import { mount } from "@vue/test-utils";
+import { createLocalVue, shallowMount } from "@vue/test-utils"
 import BaseCardItem from "./BaseCardItem.vue";
 
 const mock = { 
@@ -9,9 +9,11 @@ const mock = {
   }
 }
 
+const localVue = createLocalVue()
 describe("[BaseCardItem]", () => {
   test('should render correctly', () => {
-    const wrapper = mount(BaseCardItem, {
+    const wrapper = shallowMount(BaseCardItem, {
+      localVue,
       propsData: {
         character: {
           ...mock

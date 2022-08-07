@@ -3,4 +3,4 @@ module.exports = {
   testMatch: [
     "**/src/**/*.spec.[jt]s?(x)",
   ]
-};
+}
