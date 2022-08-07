@@ -9,7 +9,8 @@ const mock = {
   }
 }
 
-const localVue = createLocalVue()
+const localVue = createLocalVue();
+
 describe("[BaseCardItem]", () => {
   test('should render correctly', () => {
     const wrapper = shallowMount(BaseCardItem, {
@@ -20,6 +21,6 @@ describe("[BaseCardItem]", () => {
         }
       }
     });
-    expect(wrapper.props().character.name).toBe('Frajola')
+    expect(wrapper.props().character.name).toBe('Frajola');
   });
 });
