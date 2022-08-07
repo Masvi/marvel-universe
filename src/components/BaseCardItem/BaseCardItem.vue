@@ -16,7 +16,7 @@
         {{ current.name }}
       </div>
       <div class="card-item__favorite">
-        <base-favorite :character="current" />
+        <BaseFavorite :character="current" />
       </div>
     </div>
   </div>
@@ -25,6 +25,9 @@
 <script>
 export default {
   name: "BaseCardItem",
+  components: {
+    BaseFavorite: () => import('../BaseFavorite.vue')
+  },
   props: {
     character: {
       type: Object,
