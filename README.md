@@ -7,11 +7,11 @@ You can favorite up to 5 characters!
 
 [Check the demo](https://marveluniverseluizalabs.netlify.app/)
 
-#### :clipboard: Prerequisities
+#### Prerequisities
 
 You must have [NodeJS](https://nodejs.org/en/) installed before all.
 
-#### :checkered_flag: How to start
+#### How it start
 
 First, cloning the project. Then, open your bash and run the following commands:
 
@@ -29,7 +29,7 @@ npm run serve
 
 A server on port [8080](http://localhost:8080) will be started.
 
-## :microscope: Testing
+## Testing
 
 To run Cypress end-2-end tests:
 
@@ -38,7 +38,7 @@ $ npm run test:e2e
 ```
 
 
-## :hammer: Building
+## Building
 
 To build the project:
 
