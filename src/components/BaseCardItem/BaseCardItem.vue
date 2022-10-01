@@ -43,11 +43,25 @@ figure {
   padding: 0;
   max-height: 400px;
   overflow: hidden;
+  position: relative;
 }
 
 figure img {
   width: 100%;
-  margin-bottom: -4px;
   object-fit: cover;
+  cursor: pointer;
+}
+
+figcaption {
+  background-color: rgba(18, 17, 17, 0.8);
+  color: white;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  width: 94%;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
