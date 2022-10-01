@@ -49,11 +49,11 @@ export default {
   },
   methods: {
     setAsFavorite() {
-      if (this.getFavorites.length === 5 && !this.character.favorite) {
+      if (this.getFavorites.length === 6 && !this.character.favorite) {
         EventBus.$emit("favoriteLimite");
       }
    
-      if (!this.character.favorite && this.getFavorites.length < 5) {
+      if (!this.character.favorite && this.getFavorites.length < 6) {
         this.character.favorite = true;
         return this.$store.dispatch("setFavorite", this.character); 
       }

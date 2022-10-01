@@ -32,18 +32,17 @@
       >
         {{ filter ? "Não encontrado" : "Você não possuí favoritos" }}
       </span>
-      <div 
-        v-if="onlyFavorites && currentList.length === 0"
-        class="home__back"  
+    </div>
+    <div 
+      v-if="onlyFavorites"
+      class="home__back"  
+    >
+      <span 
+        v-if="onlyFavorites"
+        @click="showMainList()"
       >
-        <span 
-          v-if="onlyFavorites"
-          class="home__back" 
-          @click="showMainList()"
-        >
-          voltar
-        </span>
-      </div>
+        voltar
+      </span>
     </div>
     <div
       v-if="!onlyFavorites && currentList.length > 1"
@@ -203,8 +202,18 @@ export default {
 
   &__list {
     display: flex;
+    max-width: 1000px;
     flex-flow: row wrap;
     justify-content: space-between;
+
+    &--no-results {
+      padding: 5rem;
+    }
+  }
+
+  &__back {
+    width: 100%;
+    padding-top: 30px;
   }
 
   &__pagination {
