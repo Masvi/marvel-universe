@@ -185,6 +185,7 @@ export default {
   max-width: 1000px;
   flex-flow: row wrap;
   justify-content: center;
+  padding: 10px;
   
   &__search-section {
     width: 60%;
@@ -221,6 +222,14 @@ export default {
       color: $secondary-red;
       text-transform: uppercase;
       margin-bottom: 1rem;
+    }
+  }
+
+  @media (max-width: 510px) {
+    .home__list {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
     }
   }
 }
