@@ -32,7 +32,10 @@
       >
         {{ filter ? "Não encontrado" : "Você não possuí favoritos" }}
       </span>
-      <div class="home__back">
+      <div 
+        v-if="onlyFavorites && currentList.length === 0"
+        class="home__back"  
+      >
         <span 
           v-if="onlyFavorites"
           class="home__back" 
@@ -230,6 +233,15 @@ export default {
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .home__list {
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: space-around;
     }
   }
 }
