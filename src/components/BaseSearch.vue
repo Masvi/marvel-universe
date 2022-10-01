@@ -1,6 +1,6 @@
 <template>
   <div class="base-search">
-    <div class="base-search__container">
+    
       <input
         v-model="characterName"
         data-testid="search-home"
@@ -13,7 +13,7 @@
         @keyup.enter="searchByName"
         @keyup="onChange"
       >
-    </div>
+
     <span
       v-show="err"
       data-testid="search-err"
@@ -84,23 +84,17 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .base-search {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  &__container {
-    display: flex;
-    flex-direction: column;
-    height: 3rem;
-  }
+  height: 3rem;
+  width: 100%; 
 
   &__input{
     flex: 1;
-    width: 100%;
-    min-width: 20rem;
+    width: 100%; 
     border-radius: 50px;
     text-indent: 4rem;
     border: none;

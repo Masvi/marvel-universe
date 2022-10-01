@@ -69,9 +69,7 @@ export default {
 <style lang="scss" scoped>
 .base-list-menu {
   display: flex;
-  margin: 0 5px 0 5px;
   font-size: 0.8rem;
-  max-width: 800px;
   width: 100%;
 
   &__favorites {
