@@ -1,24 +1,23 @@
 <template>
-  <div
-    ref="top"
+  <div 
+    ref="top" 
     class="home"
   >
-    <Header />
-    <div
-      class="home__search-section"
-    >
+    <div class="home__search-section">
       <base-search
         :err="isEmpty"
         @typing="handleList"
         @response="handleResponse"
       />
     </div>
-    <base-list-menu
-      :metadata="currentList"
-      :only-favorites="onlyFavorites"
-      @sort="sort"
-      @favorite-only="showOnlyFavorites"
-    />
+    <div class="home__options">
+      <base-list-menu
+        :metadata="currentList"
+        :only-favorites="onlyFavorites"
+        @sort="sort"
+        @favorite-only="showOnlyFavorites"
+      />
+    </div>
     <div class="home__list">
       <base-card-item
         v-for="item of currentList"
@@ -26,8 +25,26 @@
         :character="item"
         @click="showDetails(item)"
       />
+      <span
+        v-if="onlyFavorites && currentList.length === 0"
+        data-testid="no-results"
+        class="home__list--no-results"
+      >
+        {{ filter ? "Não encontrado" : "Você não possuí favoritos" }}
+      </span>
     </div>
-    <div
+    <div 
+      v-if="onlyFavorites"
+      class="home__back"  
+    >
+      <span 
+        v-if="onlyFavorites"
+        @click="showMainList()"
+      >
+        voltar
+      </span>
+    </div>
+    <!-- <div
       v-if="!onlyFavorites && currentList.length > 1"
       class="home__pagination"
     >
@@ -35,35 +52,15 @@
         :metadata="metadata"
         @handlePagination="updateMetadata"
       />
-    </div>
-    <span
-      v-if="onlyFavorites && currentList.length === 0"
-      data-testid="no-results"
-      class="home__list--no-results"
-    >
-      {{ filter ? "Não encontrado" : "Você não possuí favoritos" }}
-    </span>
-    <div class="home__back">
-      <span
-        v-if="onlyFavorites"
-        class="home__back"
-        @click="showMainList()"
-      >
-        voltar
-      </span>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import Header from "../components/Header";
 import marvelService from "../services/marvelService";
 import { mapGetters } from "vuex";
 
 export default {
-  components: {
-    Header,
-  },
   data() {
     return {
       characters: [],
@@ -165,7 +162,7 @@ export default {
       this.$store.dispatch("setLoading");
     },
     updateMetadata(value) {
-      this.$refs.top.scrollIntoView()
+      this.$refs.top.scrollIntoView();
       this.metadata.offset = value;
       this.handleLoading();
       this.findCharacters();
@@ -187,50 +184,36 @@ export default {
 <style lang="scss" scoped>
 .home {
   display: flex;
-  align-items: center;
+  max-width: 1000px;
+  flex-flow: row wrap;
   justify-content: center;
-  flex-direction: column;
-
+  padding: 10px;
+  
   &__search-section {
-    padding: 1rem;
+    width: 60%;
+    margin: 10px 0 10px 0;
   }
 
   &__options {
+    width: 100%;
     font-size: 0.85rem;
     color: $secondary-red;
   }
 
-  &__favorites {
-    cursor: pointer;
-
-    &:hover > img {
-      transform: scale(1.1);
-      transition: all 0.4s;
-    }
-  }
-
-  &__title {
-    display: flex;
-    font-weight: bold;
-    padding: 1rem;
-    color: $primary-gray;
-    justify-content: center;
-  }
-
   &__list {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 800px;
-    justify-content: center;
-
+    flex-flow: row wrap;
+    justify-content: space-between;
+    max-width: 1000px;
+    
     &--no-results {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      font-size: 0.75rem;
-      padding: 3rem;
-      color: $primary-black;
+      padding: 5rem;
     }
+  }
+
+  &__back {
+    width: 100%;
+    padding-top: 30px;
   }
 
   &__pagination {
@@ -254,19 +237,12 @@ export default {
     }
   }
 
-  &__menu {
-    padding: 0.4rem;
-  }
-
-  &__not-found {
-    justify-content: center;
-    text-align: center;
-    margin-top: 20vh;
-  }
-
-  &__search-not-found {
-    color: $secondary-red;
-    font-size: 1rem;
+  @media (max-width: 600px) {
+    .home__list {
+      display: flex;
+      align-items: center;
+      justify-content:center; 
+    }
   }
 }
 </style>

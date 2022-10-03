@@ -1,32 +1,22 @@
 <template>
-  <div class="card-item">
-    <div class="card-item__photo">
-      <img
-        :src="`${current.thumbnail.path}/portrait_xlarge.${current.thumbnail.extension}`"
-        :alt="current.name"
-        @click="$emit('click')"
-      >
-    </div>
-    <div class="card-item__container">
-      <div
-        data-testid="card-item"
-        class="card-item__title"
-        @click="$emit('click')"
-      >
-        {{ current.name }}
-      </div>
-      <div class="card-item__favorite">
-        <BaseFavorite :character="current" />
-      </div>
-    </div>
-  </div>
+  <figure>
+    <img
+      :src="`${current.thumbnail.path}/portrait_uncanny.${current.thumbnail.extension}`"
+      :alt="current.name"
+      @click="$emit('click')"
+    >
+    <figcaption>
+      {{ current.name }}
+      <BaseFavorite :character="current" />
+    </figcaption>
+  </figure>
 </template>
 
 <script>
 export default {
   name: "BaseCardItem",
   components: {
-    BaseFavorite: () => import('../BaseFavorite.vue')
+    BaseFavorite: () => import("../BaseFavorite.vue"),
   },
   props: {
     character: {
@@ -47,32 +37,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card-item {
-  width: 150px;
-  height: 310px;
-  padding: 0.3rem;
 
-  &__photo {
-    height: 224px;
-    border-bottom: 2.5px solid $secondary-red;
+figure {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+  max-height: 400px;
+  overflow: hidden;
+  position: relative;
+}
 
-    & img {
-      border-radius: 2px;
-      cursor: pointer;
+figure img {
+  width: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+figcaption {
+  background-color: rgba(18, 17, 17, 0.8);
+  color: white;
+  font-size: 1rem;
+  position: absolute;
+  bottom: 0;
+  width: 94%;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+  @media (min-width: 600px) {
+    figure {
+      flex-basis: 48%;    
     }
   }
 
-  &__title {
-    font-weight: 800;
-    font-size: 0.75rem;
-    color: $primary-black;
-    cursor: pointer;
+  @media (min-width: 800px) {
+    figure {
+      flex-basis: 32%;  
+    }
   }
 
-  &__container {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 16px;
+  @media (min-width: 1000px) {
+    figure {
+      flex-basis: 22%;  
+    }
   }
-}
 </style>
