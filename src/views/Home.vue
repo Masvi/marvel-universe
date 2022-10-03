@@ -44,7 +44,7 @@
         voltar
       </span>
     </div>
-    <div
+    <!-- <div
       v-if="!onlyFavorites && currentList.length > 1"
       class="home__pagination"
     >
@@ -52,7 +52,7 @@
         :metadata="metadata"
         @handlePagination="updateMetadata"
       />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -202,10 +202,10 @@ export default {
 
   &__list {
     display: flex;
-    max-width: 1000px;
     flex-flow: row wrap;
     justify-content: space-between;
-
+    max-width: 1000px;
+    
     &--no-results {
       padding: 5rem;
     }
@@ -237,20 +237,11 @@ export default {
     }
   }
 
-  @media (max-width: 510px) {
+  @media (max-width: 600px) {
     .home__list {
       display: flex;
-      flex-flow: row wrap;
-      justify-content: center;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .home__list {
-      display: flex;
-      flex-flow: row wrap;
       align-items: center;
-      justify-content: space-around;
+      justify-content:center; 
     }
   }
 }

@@ -6,7 +6,7 @@ const public_key = auth.getPublicKey();
 export default {
   getCharacters({ offset }) {
     return api.get(
-      `/characters?&limit=21&offset=${offset}&ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`
+      `/characters?&limit=20&offset=${offset}&ts=${auth.getTimeStamp()}&apikey=${public_key}&hash=${auth.getHashMd5()}`
     );
   },
   getCharacterById(id) {

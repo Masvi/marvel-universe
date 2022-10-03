@@ -64,4 +64,22 @@ figcaption {
   display: flex;
   justify-content: space-between;
 }
+
+  @media (min-width: 600px) {
+    figure {
+      flex-basis: 48%;    
+    }
+  }
+
+  @media (min-width: 800px) {
+    figure {
+      flex-basis: 32%;  
+    }
+  }
+
+  @media (min-width: 1000px) {
+    figure {
+      flex-basis: 22%;  
+    }
+  }
 </style>
