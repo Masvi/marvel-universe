@@ -205,6 +205,7 @@ export default {
     flex-flow: row wrap;
     justify-content: space-between;
     max-width: 1000px;
+    gap: 5px;
     
     &--no-results {
       padding: 5rem;

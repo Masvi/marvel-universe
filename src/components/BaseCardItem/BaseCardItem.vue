@@ -44,6 +44,7 @@ figure {
   max-height: 400px;
   overflow: hidden;
   position: relative;
+  flex-basis: 100%;
 }
 
 figure img {
@@ -65,9 +66,9 @@ figcaption {
   justify-content: space-between;
 }
 
-  @media (min-width: 600px) {
+  @media (min-width: 450px) {
     figure {
-      flex-basis: 48%;    
+      flex-basis: 49%;    
     }
   }
 
