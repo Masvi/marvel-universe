@@ -2,18 +2,13 @@
   <div class="character">
     <div class="character__header">
       <div 
-        class="character__header logo"
-        @click="redirectToHome()"
-      >
-        <img
-          src="../assets/logo_menor.svg"
-          alt="logo"
-        >
-      </div>
+        class="character__header logo" 
+        @click="redirectToHome()" 
+      />
       <div class="character__header search">
         <base-search 
-          :err="isEmpty"
-          @response="handleResponse"
+          :err="isEmpty" 
+          @response="handleResponse" 
         />
       </div>
     </div>
@@ -27,34 +22,34 @@
         </div>
         <div class="character__section">
           <base-favorite 
-            :is-large="true"
-            :character="currentCharacter"
+            :is-large="true" 
+            :character="currentCharacter" 
           />
         </div>
       </div>
       <div class="character__container character__container--column">
-        <div class="character__container character__container--row">
-          <div 
-            v-if="currentCharacter.description"
-            class="character__description"
+        <div
+          class="character__profile-photo"
+          :class="{
+            'character__profile-photo--empty': !currentCharacter.description,
+          }"
+        >
+          <img
+            name="comic"
+            :src="`${currentCharacter.thumbnail.path}/portrait_uncanny.${currentCharacter.thumbnail.extension}`"
+            :alt="`${currentCharacter.thumbnail.path}`"
           >
-            <p>  
-              {{ currentCharacter.description }}
-            </p>
-          </div>
-          <div 
-            class="character__profile-photo"
-            :class="{'character__profile-photo--empty': !currentCharacter.description }"
-          >
-            <img
-              name="comic" 
-              :src="`${currentCharacter.thumbnail.path}/portrait_xlarge.${currentCharacter.thumbnail.extension}`"
-              :alt="`${currentCharacter.thumbnail.path}`"
-            >
-          </div>
+        </div>
+        <div
+          v-if="currentCharacter.description"
+          class="character__description"
+        >
+          <p>
+            {{ currentCharacter.description }}
+          </p>
         </div>
         <div class="character__description">
-          <span 
+          <span
             v-if="!currentCharacter.description"
             class="character__description character__description--no-description"
           >
@@ -62,6 +57,7 @@
           </span>
         </div>
       </div>
+      
       <div class="character__container">
         <div class="character__info">
           <div class="character__info detail">
@@ -97,7 +93,7 @@
             src="../assets/avaliacao_on.svg"
             alt="comics"
           >
-        </div>      
+        </div>
         <div class="character__info last-comic">
           <label>Último quadrinho:</label>
           <span>
@@ -107,63 +103,59 @@
       </div>
     </div>
     <div class="character__container--column">
-      <div class="character__comics-list">
-        <div class="character__comics">
-          <h1 data-testid="secondary-title">
-            Últimos lançamentos
-          </h1>
-        </div>
+      <div class="character__comics">
+        <h1 data-testid="secondary-title">
+          Últimos lançamentos
+        </h1>
+      </div>
+      <div
+        data-testid="editions-list"
+        class="character__container character__container--wrap"
+      >
         <div
-          data-testid="editions-list"
-          class="character__container character__container--wrap"
+          v-for="(item, i) of comics"
+          v-show="i < 10"
+          :key="i"
+          class="character__comics item"
+          data-testid="latest-editions"
         >
-          <div
-            v-for="(item, i) of comics"
-            v-show="i < 10"
-            :key="i"
-            class="character__comics item"
-            data-testid="latest-editions"
+          <img
+            name="comic"
+            :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
+            :alt="`${item.thumbnail.path}`"
           >
-            <img
-              name="comic"
-              :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
-              :alt="`${item.thumbnail.path}`"
-            >
-            <span
-              class="character__comics title"
-            >
-              {{ item.dates[0].date | formattedDate }}
-            </span>
-          </div>
+          <span class="character__comics title">
+            {{ item.dates[0].date | formattedDate }}
+          </span>
         </div>
       </div>
-    </div>
+    </div> 
   </div>
 </template>
 
 <script>
-import BaseSearch from '../components/BaseSearch.vue';
-import marvelService from '../services/marvelService';
+import BaseSearch from "../components/BaseSearch.vue";
+import marvelService from "../services/marvelService";
 import { mapGetters } from "vuex";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   name: "CharacterDetail",
-  components: { 
-    BaseSearch 
+  components: {
+    BaseSearch,
   },
   filters: {
     formattedDate(date) {
-      return (date) ?  moment(date).format('DD/MM/YYYY') : 'Não encontrado';
-    }
+      return date ? moment(date).format("DD/MM/YYYY") : "Não encontrado";
+    },
   },
   data() {
     return {
       currentCharacter: {},
       comics: [],
       lastComic: null,
-      isEmpty: false
-    }
+      isEmpty: false,
+    };
   },
   computed: {
     ...mapGetters({
@@ -176,10 +168,10 @@ export default {
       this.handleLoading();
     }
 
-    const storage = JSON.parse(localStorage.getItem('favorites'));
-    
+    const storage = JSON.parse(localStorage.getItem("favorites"));
+
     if (storage) {
-      this.$store.dispatch("setFavoritesFromLocalStorage", storage); 
+      this.$store.dispatch("setFavoritesFromLocalStorage", storage);
     }
 
     const { id } = this.$route.params;
@@ -196,22 +188,24 @@ export default {
     },
     async findCharacterById(id) {
       this.handleLoading();
-      
-      this.currentCharacter = await marvelService.getCharacterById(id)
-        .then(({data}) =>  (data.data.results[0]) ? {...data.data.results[0], favorite: false }: '');
-      
-      console.log(this.currentCharacter);
+
+      this.currentCharacter = await marvelService
+        .getCharacterById(id)
+        .then(({ data }) =>
+          data.data.results[0]
+            ? { ...data.data.results[0], favorite: false }
+            : ""
+        );
 
       this.checkIfisFavorite(this.currentCharacter.id);
 
       await this.findComics(this.currentCharacter);
-      
     },
-    findComics( { comics } ) {
+    findComics({ comics }) {
       const ids = this.resolveUrl(comics);
-      
-      ids.forEach((id) =>  {
-        marvelService.getComicById(id).then(({data}) => {
+
+      ids.forEach((id) => {
+        marvelService.getComicById(id).then(({ data }) => {
           this.comics.push(data.data.results[0]);
           this.setLastSale(this.comics[0]);
         });
@@ -228,7 +222,7 @@ export default {
         this.currentCharacter = value[0];
         this.handleLoading();
 
-        return this.findComics(this.currentCharacter); 
+        return this.findComics(this.currentCharacter);
       }
       this.isEmpty = true;
     },
@@ -236,45 +230,30 @@ export default {
       this.$store.dispatch("setLoading");
     },
     resolveUrl({ items }) {
-      return items.map(item => item.resourceURI.split("/").pop());
+      return items.map((item) => item.resourceURI.split("/").pop());
     },
     redirectToHome() {
       this.$router.push({ name: "home" });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .character {
   display: flex;
   flex-direction: column;
-  margin: 2rem 2rem;
-
-  &__header {
-    display: flex;
-
-    &.logo{
-      cursor: pointer;
-    }
-    
-    &.search {
-      justify-content:center;
-      max-width: 500px;
-      padding-top: 30px;
-    }
-  }
 
   &__not-found {
     color: $secondary-red;
     font-size: 1rem;
   }
-  
-  &__section {
+
+  /* &__section {
     margin-top: 30px;
     max-width: 450px;
     margin-left: 20px;
-  }
+  } */
 
   &__title {
     font-size: 2.5rem;
@@ -283,7 +262,7 @@ export default {
     margin-left: 0;
   }
 
-  &__description { 
+  &__description {
     margin-top: 1rem;
     font-size: 1rem;
     font-weight: 500;
@@ -301,10 +280,8 @@ export default {
 
   &__profile-photo {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin-left: 40px;
-    padding: 20px;
 
     &--empty {
       margin-left: 0;
@@ -317,7 +294,7 @@ export default {
     margin-top: 16px;
 
     & label {
-      color:$primary-black;
+      color: $primary-black;
       margin-right: 10px;
       font-size: 1rem;
       font-weight: 500;
@@ -325,13 +302,13 @@ export default {
 
     &.detail {
       display: flex;
-      justify-content:center;
+      justify-content: center;
       flex-direction: column;
     }
 
     &.rating {
       align-items: center;
- 
+
       & img {
         width: 18px;
         height: 18px;
@@ -363,7 +340,7 @@ export default {
     margin-top: 30px;
     max-width: 900px;
     flex-wrap: wrap;
-    
+
     &.item {
       display: flex;
       flex-direction: column;
@@ -372,7 +349,7 @@ export default {
     }
 
     &.title {
-      font-size: .75rem;
+      font-size: 0.75rem;
       color: $primary-black;
       font-weight: 500;
       justify-content: center;
@@ -384,18 +361,13 @@ export default {
     }
   }
 
-  &__comics-list {
-    margin-left: 20px;
-  }
-
-  &__container { 
+  &__container {
     display: flex;
-    align-items: center;
 
     &--column {
       flex-direction: column;
     }
-    
+
     &--margin {
       margin-top: 20px;
     }
@@ -416,17 +388,12 @@ export default {
   }
 }
 
-@media screen and (max-width: 1440px) { 
-  .character__header {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
+@media screen and (max-width: 1440px) {
   .character__section {
     margin-top: 1rem;
   }
 
-  .character__title{ 
+  .character__title {
     font-size: 2rem;
   }
 }

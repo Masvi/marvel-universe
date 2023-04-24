@@ -1,18 +1,17 @@
 <template>
   <div class="base-search">
-    
-      <input
-        v-model="characterName"
-        data-testid="search-home"
-        name="search"
-        class="base-search__input"
-        placeholder="Procure por heróis"
-        onfocus="placeholder=''"
-        onblur="placeholder='Procure por heróis'" 
-        type="text"
-        @keyup.enter="searchByName"
-        @keyup="onChange"
-      >
+    <input
+      v-model="characterName"
+      data-testid="search-home"
+      name="search"
+      class="base-search__input"
+      placeholder="Procure por heróis"
+      onfocus="placeholder=''"
+      onblur="placeholder='Procure por heróis'"
+      type="text"
+      @keyup.enter="searchByName"
+      @keyup="onChange"
+    >
 
     <span
       v-show="err"
@@ -25,8 +24,7 @@
 </template>
 
 <script>
-
-import marvelService from '../services/marvelService';
+import marvelService from "../services/marvelService";
 import { mapGetters } from "vuex";
 
 export default {
@@ -37,74 +35,71 @@ export default {
     },
     err: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      characterName: '',
-    }
+      characterName: "",
+    };
   },
-    computed: {
+  computed: {
     ...mapGetters({
       currentFavorites: "getFavorites",
     }),
   },
   methods: {
     searchByName() {
-      if (this.characterName !== '') {
-
+      if (this.characterName !== "") {
         this.$store.dispatch("setLoading");
-        
-        marvelService.getCharacterByName(this.characterName)
-          .then(({ data }) => { 
-            
+
+        marvelService
+          .getCharacterByName(this.characterName)
+          .then(({ data }) => {
             if (!data.data.results[0]) {
-              return this.$emit('response', null);
+              return this.$emit("response", null);
             }
 
-            const search = {...data.data.results[0], favorite: false };
-            
-            this.checkIfisFavorite(search);   
+            const search = { ...data.data.results[0], favorite: false };
+
+            this.checkIfisFavorite(search);
           })
           .finally(() => this.$store.dispatch("setLoading"));
       }
     },
-    checkIfisFavorite(response) {    
-      this.currentFavorites.forEach(item =>{
+    checkIfisFavorite(response) {
+      this.currentFavorites.forEach((item) => {
         if (response.id === item.id) {
           response.favorite = true;
         }
-      })
-      this.$emit('response', [response]); 
+      });
+      this.$emit("response", [response]);
     },
     onChange() {
-      this.$emit('typing', this.characterName);
-    }
-  }
-}
+      this.$emit("typing", this.characterName);
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .base-search {
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 3rem;
-  width: 100%; 
 
-  &__input{
+  &__input {
     flex: 1;
-    width: 100%; 
     border-radius: 50px;
     text-indent: 4rem;
     border: none;
     outline: none;
-    background: $primary-red url(../assets/icons/ic_busca.svg) no-repeat 20px 10px;
-    transition: all .4s;
+    background: $primary-red url(../assets/icons/ic_busca.svg) no-repeat 20px
+      10px;
+    transition: all 0.4s;
   }
 
   &__warning {
-    font-size: .75rem;
+    font-size: 0.75rem;
     margin-top: 10px;
     color: $primary-gray;
 

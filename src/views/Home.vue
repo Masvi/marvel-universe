@@ -1,8 +1,5 @@
 <template>
-  <div 
-    ref="top" 
-    class="home"
-  >
+  <div ref="top" class="home">
     <div class="home__search-section">
       <base-search
         :err="isEmpty"
@@ -34,15 +31,10 @@
       </span>
     </div>
     <div 
-      v-if="onlyFavorites"
-      class="home__back"  
+      v-if="onlyFavorites" 
+      class="home__back"
     >
-      <span 
-        v-if="onlyFavorites"
-        @click="showMainList()"
-      >
-        voltar
-      </span>
+      <span v-if="onlyFavorites" @click="showMainList()"> voltar </span>
     </div>
     <!-- <div
       v-if="!onlyFavorites && currentList.length > 1"
@@ -187,10 +179,9 @@ export default {
   max-width: 1000px;
   flex-flow: row wrap;
   justify-content: center;
-  padding: 10px;
-  
+
   &__search-section {
-    width: 60%;
+    width: 100%;
     margin: 10px 0 10px 0;
   }
 
@@ -206,7 +197,7 @@ export default {
     justify-content: space-between;
     max-width: 1000px;
     gap: 5px;
-    
+
     &--no-results {
       padding: 5rem;
     }
@@ -238,12 +229,12 @@ export default {
     }
   }
 
-  @media (max-width: 600px) {
+  /* @media (max-width: 600px) {
     .home__list {
       display: flex;
       align-items: center;
-      justify-content:center; 
+      justify-content: center;
     }
-  }
+  } */
 }
 </style>

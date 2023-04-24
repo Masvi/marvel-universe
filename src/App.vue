@@ -43,9 +43,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   #main {
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; */
+    padding: 10px;
   }
 }
 </style>
