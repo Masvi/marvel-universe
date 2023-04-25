@@ -86,10 +86,7 @@ export default {
         }
       });
       this.$emit("response", [response]);
-    },
-    onChange() {
-      this.$emit("typing", this.characterName);
-    },
+    }
   },
 };
 </script>
