@@ -1,18 +1,18 @@
 <template>
   <div class="base-search">
-    <input
-      v-model="characterName"
-      data-testid="search-home"
-      name="search"
-      class="base-search__input"
-      placeholder="Procure por heróis"
-      onfocus="placeholder=''"
-      onblur="placeholder='Procure por heróis'"
-      type="text"
-      @keyup.enter="searchByName"
-      @keyup="onChange"
-    >
-
+    <div>
+      <input
+        v-model="characterName"
+        data-testid="search-home"
+        name="search"
+        class="base-search__input"
+        placeholder="Procure por heróis"
+        onfocus="placeholder=''"
+        onblur="placeholder='Procure por heróis'"
+        type="text"
+        @keyup="debounceFn(searchByName)"
+      >
+    </div>
     <span
       v-show="err"
       data-testid="search-err"
@@ -41,6 +41,8 @@ export default {
   data() {
     return {
       characterName: "",
+      isCalling: false,
+      debounce: 2000,
     };
   },
   computed: {
@@ -49,6 +51,16 @@ export default {
     }),
   },
   methods: {
+    debounceFn(fn) {
+      if (this.isCalling) return;
+
+      this.isCalling = true;
+
+      setTimeout(() => {
+        fn(this.characterName);
+        this.isCalling = false;
+      }, this.debounce);
+    },
     searchByName() {
       if (this.characterName !== "") {
         this.$store.dispatch("setLoading");
@@ -85,12 +97,12 @@ export default {
 .base-search {
   display: flex;
   flex-direction: column;
-  height: 3rem;
 
   &__input {
-    flex: 1;
-    border-radius: 50px;
+    width: 100%;
+    height: 3rem;
     text-indent: 4rem;
+    border-radius: 50px;
     border: none;
     outline: none;
     background: $primary-red url(../assets/icons/ic_busca.svg) no-repeat 20px
@@ -99,8 +111,8 @@ export default {
   }
 
   &__warning {
-    font-size: 0.75rem;
-    margin-top: 10px;
+    font-size: 0.90rem;
+    margin: 10px 15px 0 10px;
     color: $primary-gray;
 
     &--error {
