@@ -179,9 +179,10 @@ export default {
   max-width: 1000px;
   flex-flow: row wrap;
   justify-content: center;
+  padding: 10px;
 
   &__search-section {
-    width: 100%;
+    width: 60%;
     margin: 10px 0 10px 0;
   }
 
@@ -229,12 +230,12 @@ export default {
     }
   }
 
-  /* @media (max-width: 600px) {
+  @media (max-width: 600px) {
     .home__list {
       display: flex;
       align-items: center;
       justify-content: center;
     }
-  } */
+  }
 }
 </style>

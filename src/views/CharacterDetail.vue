@@ -1,15 +1,9 @@
 <template>
   <div class="character">
     <div class="character__header">
-      <div 
-        class="character__header logo" 
-        @click="redirectToHome()" 
-      />
+      <div class="character__header logo" @click="redirectToHome()" />
       <div class="character__header search">
-        <base-search 
-          :err="isEmpty" 
-          @response="handleResponse" 
-        />
+        <base-search :err="isEmpty" @response="handleResponse" />
       </div>
     </div>
     <div class="character__section">
@@ -21,10 +15,7 @@
           {{ currentCharacter.name }}
         </div>
         <div class="character__section">
-          <base-favorite 
-            :is-large="true" 
-            :character="currentCharacter" 
-          />
+          <base-favorite :is-large="true" :character="currentCharacter" />
         </div>
       </div>
       <div class="character__container character__container--column">
@@ -38,12 +29,9 @@
             name="comic"
             :src="`${currentCharacter.thumbnail.path}/portrait_uncanny.${currentCharacter.thumbnail.extension}`"
             :alt="`${currentCharacter.thumbnail.path}`"
-          >
+          />
         </div>
-        <div
-          v-if="currentCharacter.description"
-          class="character__description"
-        >
+        <div v-if="currentCharacter.description" class="character__description">
           <p>
             {{ currentCharacter.description }}
           </p>
@@ -57,16 +45,13 @@
           </span>
         </div>
       </div>
-      
+
       <div class="character__container">
         <div class="character__info">
           <div class="character__info detail">
             <label> Quadrinhos </label>
             <div class="character__container character__container--margin">
-              <img
-                src="../assets/icons/ic_quadrinhos.svg"
-                alt="comics"
-              >
+              <img src="../assets/icons/ic_quadrinhos.svg" alt="comics" />
               <span v-if="currentCharacter.comics">
                 {{ currentCharacter.comics.available }}
               </span>
@@ -75,10 +60,7 @@
           <div class="character__info detail">
             <label>Filmes</label>
             <div class="character__container character__container--margin">
-              <img
-                src="../assets/icons/ic_trailer.svg"
-                alt="movie"
-              >
+              <img src="../assets/icons/ic_trailer.svg" alt="movie" />
               <span v-if="currentCharacter.series">
                 {{ currentCharacter.series.available }}
               </span>
@@ -89,10 +71,7 @@
       <div class="character__container--column character__container--margin">
         <div class="character__info rating">
           <label>Rating:</label>
-          <img
-            src="../assets/avaliacao_on.svg"
-            alt="comics"
-          >
+          <img src="../assets/avaliacao_on.svg" alt="comics" />
         </div>
         <div class="character__info last-comic">
           <label>Último quadrinho:</label>
@@ -104,32 +83,18 @@
     </div>
     <div class="character__container--column">
       <div class="character__comics">
-        <h1 data-testid="secondary-title">
-          Últimos lançamentos
-        </h1>
+        <h1 data-testid="secondary-title">Últimos lançamentos</h1>
       </div>
-      <div
-        data-testid="editions-list"
-        class="character__container character__container--wrap"
-      >
-        <div
-          v-for="(item, i) of comics"
-          v-show="i < 10"
-          :key="i"
-          class="character__comics item"
-          data-testid="latest-editions"
-        >
+      <div class="character__comics list" data-testid="latest-editions">
+        <figure v-for="(item, i) of comics" v-show="i < 10" :key="i">
           <img
             name="comic"
-            :src="`${item.thumbnail.path}/portrait_medium.${item.thumbnail.extension}`"
+            :src="`${item.thumbnail.path}/portrait_uncanny.${item.thumbnail.extension}`"
             :alt="`${item.thumbnail.path}`"
-          >
-          <span class="character__comics title">
-            {{ item.dates[0].date | formattedDate }}
-          </span>
-        </div>
+          />
+        </figure>
       </div>
-    </div> 
+    </div>
   </div>
 </template>
 
@@ -199,7 +164,7 @@ export default {
 
       this.checkIfisFavorite(this.currentCharacter.id);
 
-      await this.findComics(this.currentCharacter);
+      this.findComics(this.currentCharacter);
     },
     findComics({ comics }) {
       const ids = this.resolveUrl(comics);
@@ -249,12 +214,6 @@ export default {
     font-size: 1rem;
   }
 
-  /* &__section {
-    margin-top: 30px;
-    max-width: 450px;
-    margin-left: 20px;
-  } */
-
   &__title {
     font-size: 2.5rem;
     font-weight: bold;
@@ -280,7 +239,7 @@ export default {
 
   &__profile-photo {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     &--empty {
@@ -336,28 +295,27 @@ export default {
   }
 
   &__comics {
-    display: flex;
-    margin-top: 30px;
-    max-width: 900px;
-    flex-wrap: wrap;
-
-    &.item {
+    &.list {
       display: flex;
-      flex-direction: column;
-      width: 100px;
-      margin-right: 1.5rem;
-    }
-
-    &.title {
-      font-size: 0.75rem;
-      color: $primary-black;
-      font-weight: 500;
+      flex-flow: row wrap;
       justify-content: center;
-    }
+      max-width: 900px;
+      gap: 5px;
 
-    & h1 {
-      color: $primary-black;
-      font-size: 1.75rem;
+      & figure {
+        margin: 0 0 0.5rem 0;
+        padding: 0;
+        max-height: 340px;
+        overflow: hidden;
+        position: relative;
+        flex-basis: 80%;
+      }
+
+      & figure img {
+        width: 100%;
+        object-fit: cover;
+        cursor: pointer;
+      }
     }
   }
 
@@ -388,13 +346,30 @@ export default {
   }
 }
 
-@media screen and (max-width: 1440px) {
-  .character__section {
-    margin-top: 1rem;
+@media (min-width: 450px) {
+  .character {
+    &__comics {
+      &.list {
+       
+        //gap: 1px;
+        figure {
+          flex-basis: 45%;
+        }
+      }
+    }
   }
+}
 
-  .character__title {
-    font-size: 2rem;
+@media (min-width: 600px) {
+  .character {
+    &__comics {
+      &.list {
+        justify-content: space-between;
+        figure {
+          flex-basis: 23%;
+        }
+      }
+    }
   }
 }
 </style>
