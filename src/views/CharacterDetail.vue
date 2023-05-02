@@ -1,97 +1,125 @@
 <template>
   <div class="character">
     <div class="character__header">
-      <div class="character__header logo" @click="redirectToHome()" />
+      <div 
+        class="character__header logo" 
+        @click="redirectToHome()" 
+      />
       <div class="character__header search">
-        <base-search :err="isEmpty" @response="handleResponse" />
+        <base-search 
+          :err="isEmpty" 
+          @response="handleResponse" 
+        />
       </div>
     </div>
-    <div class="character__section">
-      <div class="character__container character__container--between">
-        <div
-          data-testid="name-title"
-          class="character__section character__title"
-        >
-          {{ currentCharacter.name }}
-        </div>
-        <div class="character__section">
-          <base-favorite :is-large="true" :character="currentCharacter" />
-        </div>
-      </div>
-      <div class="character__container character__container--column">
-        <div
-          class="character__profile-photo"
-          :class="{
-            'character__profile-photo--empty': !currentCharacter.description,
-          }"
-        >
-          <img
-            name="comic"
-            :src="`${currentCharacter.thumbnail.path}/portrait_uncanny.${currentCharacter.thumbnail.extension}`"
-            :alt="`${currentCharacter.thumbnail.path}`"
-          />
-        </div>
-        <div v-if="currentCharacter.description" class="character__description">
-          <p>
-            {{ currentCharacter.description }}
-          </p>
-        </div>
-        <div class="character__description">
-          <span
-            v-if="!currentCharacter.description"
-            class="character__description character__description--no-description"
-          >
-            O personagem não possui descrição ainda!
-          </span>
-        </div>
-      </div>
 
-      <div class="character__container">
-        <div class="character__info">
-          <div class="character__info detail">
-            <label> Quadrinhos </label>
-            <div class="character__container character__container--margin">
-              <img src="../assets/icons/ic_quadrinhos.svg" alt="comics" />
-              <span v-if="currentCharacter.comics">
-                {{ currentCharacter.comics.available }}
-              </span>
-            </div>
-          </div>
-          <div class="character__info detail">
-            <label>Filmes</label>
-            <div class="character__container character__container--margin">
-              <img src="../assets/icons/ic_trailer.svg" alt="movie" />
-              <span v-if="currentCharacter.series">
-                {{ currentCharacter.series.available }}
-              </span>
-            </div>
-          </div>
-        </div>
+    <div class="character__title">
+      <h1
+        data-testid="name-title"
+      >
+        {{ currentCharacter.name }}
+      </h1>
+      <base-favorite 
+        :is-large="true" 
+        :character="currentCharacter" 
+      />
+    </div>
+  
+    <div class="character__container character__container--column">
+      <div
+        class="character__profile-photo"
+        :class="{
+          'character__profile-photo--empty': !currentCharacter.description,
+        }"
+      >
+        <img
+          name="comic"
+          :src="`${currentCharacter.thumbnail.path}/portrait_uncanny.${currentCharacter.thumbnail.extension}`"
+          :alt="`${currentCharacter.thumbnail.path}`"
+        >
       </div>
-      <div class="character__container--column character__container--margin">
-        <div class="character__info rating">
-          <label>Rating:</label>
-          <img src="../assets/avaliacao_on.svg" alt="comics" />
+      <div 
+        v-if="currentCharacter.description" 
+        class="character__description"
+      >
+        <p>
+          {{ currentCharacter.description }}
+        </p>
+      </div>
+      <div class="character__description">
+        <span
+          v-if="!currentCharacter.description"
+          class="character__description character__description--no-description"
+        >
+          O personagem não possui descrição ainda!
+        </span>
+      </div>
+    </div>
+
+    <div class="character__container">
+      <div class="character__info">
+        <div class="character__info detail">
+          <label> Quadrinhos </label>
+          <div class="character__container character__container--margin">
+            <img 
+              src="../assets/icons/ic_quadrinhos.svg" 
+              alt="comics"
+            >
+            <span v-if="currentCharacter.comics">
+              {{ currentCharacter.comics.available }}
+            </span>
+          </div>
         </div>
-        <div class="character__info last-comic">
-          <label>Último quadrinho:</label>
-          <span>
-            {{ lastComic | formattedDate }}
-          </span>
+        <div class="character__info detail">
+          <label>Filmes</label>
+          <div class="character__container character__container--margin">
+            <img 
+              src="../assets/icons/ic_trailer.svg" 
+              alt="movie"
+            >
+            <span v-if="currentCharacter.series">
+              {{ currentCharacter.series.available }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
+    <div class="character__container--column character__container--margin">
+      <div class="character__info rating">
+        <label>Rating:</label>
+        <img 
+          src="../assets/avaliacao_on.svg" 
+          alt="comics" 
+        >
+      </div>
+      <div class="character__info last-comic">
+        <label>Último quadrinho:</label>
+        <span>
+          {{ lastComic | formattedDate }}
+        </span>
+      </div>
+    </div>
+
     <div class="character__container--column">
       <div class="character__comics">
-        <h1 data-testid="secondary-title">Últimos lançamentos</h1>
+        <h1 data-testid="secondary-title">
+          Últimos lançamentos
+        </h1>
       </div>
-      <div class="character__comics list" data-testid="latest-editions">
-        <figure v-for="(item, i) of comics" v-show="i < 10" :key="i">
+      <div 
+        class="character__comics list" 
+        data-testid="latest-editions"
+      >
+        <figure 
+          v-for="(item, i) of comics" 
+          v-show="i < 10" 
+          :key="i"
+        >
           <img
             name="comic"
             :src="`${item.thumbnail.path}/portrait_uncanny.${item.thumbnail.extension}`"
             :alt="`${item.thumbnail.path}`"
-          />
+          >
         </figure>
       </div>
     </div>
@@ -215,10 +243,17 @@ export default {
   }
 
   &__title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+
+    & h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin: 0;
+    }
   }
 
   &__description {
@@ -254,7 +289,6 @@ export default {
 
     & label {
       color: $primary-black;
-      margin-right: 10px;
       font-size: 1rem;
       font-weight: 500;
     }
@@ -350,8 +384,6 @@ export default {
   .character {
     &__comics {
       &.list {
-       
-        //gap: 1px;
         figure {
           flex-basis: 45%;
         }
