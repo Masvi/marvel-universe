@@ -44,7 +44,7 @@
         voltar 
       </span>
     </div>
-    <!-- <div
+    <div
       v-if="!onlyFavorites && currentList.length > 1"
       class="home__pagination"
     >
@@ -52,7 +52,7 @@
         :metadata="metadata"
         @handlePagination="updateMetadata"
       />
-    </div> -->
+    </div>
   </div>
 </template>
 
