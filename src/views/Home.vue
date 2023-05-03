@@ -245,5 +245,17 @@ export default {
       justify-content: center;
     }
   }
+
+  @media (min-width: 800px) {
+    .home__search-section {
+      width: 60%;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .home__search-section {
+      width: 60%;
+    }
+  }
 }
 </style>

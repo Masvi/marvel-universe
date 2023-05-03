@@ -1,17 +1,16 @@
 <template>
-  <div class="character">
-    <div class="character__header">
-      <div 
-        class="character__header logo" 
-        @click="redirectToHome()" 
+  <div class="character"> 
+    <div 
+      class="character__header" 
+      @click="redirectToHome()" 
+    />
+    <div class="character__header search">
+      <base-search 
+        :err="isEmpty" 
+        @response="handleResponse" 
       />
-      <div class="character__header search">
-        <base-search 
-          :err="isEmpty" 
-          @response="handleResponse" 
-        />
-      </div>
     </div>
+  
 
     <div class="character__title">
       <h1
@@ -236,6 +235,7 @@ export default {
 .character {
   display: flex;
   flex-direction: column;
+  max-width: 800px;
 
   &__not-found {
     color: $secondary-red;
@@ -400,6 +400,14 @@ export default {
         figure {
           flex-basis: 23%;
         }
+      }
+    }
+    &__header {
+      display: grid;
+      margin: 0 auto;
+
+      &.search {
+        width: 60%;
       }
     }
   }

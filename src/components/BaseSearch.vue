@@ -1,18 +1,16 @@
 <template>
-  <div class="base-search">
-    <div>
-      <input
-        v-model="characterName"
-        data-testid="search-home"
-        name="search"
-        class="base-search__input"
-        placeholder="Procure por heróis"
-        onfocus="placeholder=''"
-        onblur="placeholder='Procure por heróis'"
-        type="text"
-        @keyup="debounceFn(searchByName)"
-      >
-    </div>
+  <div class="base-search">   
+    <input
+      v-model="characterName"
+      data-testid="search-home"
+      name="search"
+      class="base-search__input"
+      placeholder="Procure por heróis"
+      onfocus="placeholder=''"
+      onblur="placeholder='Procure por heróis'"
+      type="text"
+      @keyup="debounceFn(searchByName)"
+    >
     <span
       v-show="err"
       data-testid="search-err"
