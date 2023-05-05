@@ -96,10 +96,18 @@ export default {
   },
   methods: {
     handleResponse(response) {
-      if (response) {
+      if (response?.length > 0) {
         return (this.currentList = response);
       }
-      this.isEmpty = true;
+
+      if (response === null) {
+        this.isEmpty = true;
+        setTimeout(() => {
+          this.isEmpty = false;
+        }, 2500);
+      }
+
+      this.currentList = this.characters;
     },
     handleList(value) {
       if (value === "") {

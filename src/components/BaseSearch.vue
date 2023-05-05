@@ -1,5 +1,5 @@
 <template>
-  <div class="base-search">   
+  <div class="base-search">
     <input
       v-model="characterName"
       data-testid="search-home"
@@ -70,21 +70,31 @@ export default {
               return this.$emit("response", null);
             }
 
-            const search = { ...data.data.results[0], favorite: false };
+            const response = this.checkIfisFavorite({
+              ...data.data.results[0],
+            });
+            
+            const search = { ...data.data.results[0], favorite: response };
 
-            this.checkIfisFavorite(search);
+            this.$emit("response", [search]);
           })
           .finally(() => this.$store.dispatch("setLoading"));
+      } else {
+        this.$emit("response", []);
       }
     },
     checkIfisFavorite(response) {
-      this.currentFavorites.forEach((item) => {
-        if (response.id === item.id) {
-          response.favorite = true;
-        }
-      });
-      this.$emit("response", [response]);
-    }
+      let isFavorite = false;
+
+      this.currentFavorites.length &&
+        this.currentFavorites.forEach((item) => {
+          if (response.id === item.id) {
+            isFavorite = true;
+          }
+        });
+
+      return isFavorite;
+    },
   },
 };
 </script>
@@ -106,7 +116,7 @@ export default {
   }
 
   &__warning {
-    font-size: 0.90rem;
+    font-size: 0.9rem;
     margin: 10px 15px 0 10px;
     color: $primary-gray;
 
