@@ -10,7 +10,6 @@
         @response="handleResponse" 
       />
     </div>
-  
 
     <div class="character__title">
       <h1
@@ -24,7 +23,10 @@
       />
     </div>
   
-    <div class="character__container character__container--column">
+    <div 
+      v-if="currentCharacter.thumbnail"   
+      class="character__container character__container--column"
+    >
       <div
         class="character__profile-photo"
         :class="{
