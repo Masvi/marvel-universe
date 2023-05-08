@@ -59,43 +59,51 @@
 
     <div class="character__container">
       <div class="character__info">
-        <div class="character__info detail">
-          <label> Quadrinhos </label>
-          <div class="character__container character__container--margin">
+        <div class="character__container-column">
+          <label class="character__info-label">Quadrinhos</label>
+          <div class="character__info-movies">
             <img 
               src="../assets/icons/ic_quadrinhos.svg" 
               alt="comics"
             >
-            <span v-if="currentCharacter.comics">
+            <span 
+              v-if="currentCharacter.comics"
+              class="character__info-amount" 
+            >
               {{ currentCharacter.comics.available }}
             </span>
           </div>
         </div>
-        <div class="character__info detail">
-          <label>Filmes</label>
-          <div class="character__container character__container--margin">
+        <div class="character__container-column">
+          <label class="character__info-label">Filmes</label>
+          <div class="character__info-movies">
             <img 
               src="../assets/icons/ic_trailer.svg" 
               alt="movie"
             >
-            <span v-if="currentCharacter.series">
+            <span 
+              v-if="currentCharacter.series"
+              class="character__info-amount" 
+            >
               {{ currentCharacter.series.available }}
             </span>
-          </div>
+          </div> 
         </div>
       </div>
     </div>
-    <div class="character__container--column character__container--margin">
-      <div class="character__info rating">
-        <label>Rating:</label>
+    
+    <div class="character__container--column">
+      <div class="character__info">
+        <label class="character__info-label">Rating:</label>
         <img 
+          class="character__info-rating"
           src="../assets/avaliacao_on.svg" 
           alt="comics" 
         >
       </div>
       <div class="character__info last-comic">
-        <label>Último quadrinho:</label>
-        <span>
+        <label class="character__info-label">Último quadrinho:</label>
+        <span class="character__info-date">
           {{ lastComic | formattedDate }}
         </span>
       </div>
@@ -259,7 +267,7 @@ export default {
   }
 
   &__description {
-    margin-top: 1rem;
+    margin: 1rem 0 2rem;
     font-size: 1rem;
     font-weight: 500;
     color: $primary-gray;
@@ -286,47 +294,34 @@ export default {
 
   &__info {
     display: flex;
-    width: 350px;
-    margin-top: 16px;
+    padding-top: 12px;
 
-    & label {
+    &-label {
       color: $primary-black;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
     }
 
-    &.detail {
+    &-movies {
       display: flex;
-      justify-content: center;
-      flex-direction: column;
-    }
-
-    &.rating {
+      align-items: flex-start;
+      width: 200px;
       align-items: center;
-
-      & img {
-        width: 18px;
-        height: 18px;
-      }
+      padding: 4px;
     }
 
-    &.last-comic {
-      align-items: center;
-
-      & span {
-        color: $primary-gray;
-        font-weight: 500;
-        margin-left: 10px;
-      }
+    &-amount {
+      margin-left: 5px;
+      font-size: 1rem;
     }
 
-    & img {
-      width: 24px;
-      height: 24px;
+    &-date {
+      margin-left: 8px;
+      font-size: 1rem;
     }
 
-    & span {
-      margin-left: 20px;
+    &-rating {
+      margin-left: 8px;
     }
   }
 
