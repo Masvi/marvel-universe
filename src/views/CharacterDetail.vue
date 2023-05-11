@@ -311,7 +311,7 @@ export default {
     }
 
     &-amount {
-      margin-left: 5px;
+      margin-left: 15px;
       font-size: 1rem;
     }
 
@@ -326,6 +326,8 @@ export default {
   }
 
   &__comics {
+    padding-top: 15px;
+    
     &.list {
       display: flex;
       flex-flow: row wrap;
