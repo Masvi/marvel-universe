@@ -17,7 +17,7 @@
         @input="sort"
       />
 
-      <div
+      <!-- <div
         data-testid="favorites"
         class="base-list-menu__favorites"
         @click="showOnlyFavorites()"
@@ -33,7 +33,7 @@
           alt="favorite"
         >
         <span>Favoritos</span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
